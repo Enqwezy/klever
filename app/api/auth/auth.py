@@ -8,14 +8,15 @@ from database.db import get_db
 router = APIRouter()
 
 @router.post(
-    '/register',
-    summary="Register a new user or update existing"
+    '/auth/user/register',
+    summary="Register a new user or update existing",
+    response_model=TokenResponse
 )
 async def register(user: UserCreate,db: AsyncSession = Depends(get_db)):
     return await user_register(user=user, db=db)
 
 @router.post(
-    '/login',
+    '/auth/user/login',
     summary="Login user",
     response_model=TokenResponse
 )

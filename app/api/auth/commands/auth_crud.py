@@ -44,7 +44,13 @@ async def user_register(user: UserCreate, db: AsyncSession):
         logger.info(f"Created new user with email: {user.email}")
     
     await db.commit()
-    return {"message": "User registered successfully"}
+
+    access_token, expire_time = create_access_token(data={"sub": user.email})
+
+    return TokenResponse(
+        access_token=access_token,
+        access_token_expire_time=expire_time
+    )
         
         
 async def user_login(email: str, password: str, db: AsyncSession):
