@@ -49,7 +49,7 @@ async def validate_access_token(access_token: str) -> str:
     return tg_username
 
 
-async def validate_access_token_by_tg_id(access_token: str) -> str:
+async def validate_access_token_by_id(access_token: str) -> str:
     payload = jwt.decode(
             access_token,
             settings.TOKEN_SECRET_KEY,

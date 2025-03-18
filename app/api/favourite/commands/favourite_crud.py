@@ -1,5 +1,5 @@
 from sqlalchemy.ext.asyncio import AsyncSession
-from model.model import Favourite, Service
+from model.model import Favourite, Service, User
 import logging
 from fastapi import HTTPException
 from sqlalchemy import select
@@ -31,3 +31,12 @@ async def create_favourite(db: AsyncSession, user_id: int, service_id: int):
 
     logger.info(f"Сервис с ID {service_id} добавлен в избранное пользователем с ID {user_id}")
     return new_favourite
+
+async def get_user_by_email(email: str, db: AsyncSession):
+    stmt = await db.execute(
+        select(User).filter(User.email == email)
+    )
+    user = stmt.scalars().first()
+    if not user:
+        raise HTTPException(status_code=404, detail="Пользователь не найден")
+    return user
