@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@font-face {
+  font-family: 'Eastman-Medium';
+  src: url('../src/assets/fonts/eastman/Eastman-Medium.ttf') format('truetype');
+  font-weight: 400; /* Обычный вес */
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Eastman-Regular';
+  src: url('../src/assets/fonts/eastman/Eastman-Regular.ttf') format('truetype');
+  font-weight: 200; /* Обычный вес */
+  font-style: normal;
+}
