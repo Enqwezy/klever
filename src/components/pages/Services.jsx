@@ -5,6 +5,7 @@ import ServicesCard from '../UI/cards/ServicesCard'
 import Footer from '../main/Footer'
 import RequestCard from '../UI/cards/RequestCard'
 import requestPhoto from '../../assets/img/request-card.png'
+import { Link } from 'react-router-dom'
 
 function Services() {
     const data = [
@@ -90,8 +91,8 @@ function Services() {
             <BlackHeader />
             <div className='px-[10vw] flex justify-center flex-col text-center mt-5 gap-y-[3vh] '>
                 <div className='font-eastman_regular text-[7vw] sm:text-[5vw] md:text-[4vw] lg:text-[3.5vw] xl:text-[2vw]'>Красота и здоровье</div>
-                <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 grid-rows-4 gap-5 '>
-                    <div className="relative w-full max-w-[320px] h-[250px] shadow-card bg-[#1D217C] cursor-pointer">
+                <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 gap-5 '>
+                    <Link to={'/beauty/all'} className="relative w-full max-w-[320px] h-[250px] shadow-card bg-[#1D217C] cursor-pointer">
                         <div className="absolute bottom-0 w-full z-20">
                             <svg
                                 className="w-full h-[148px]"
@@ -112,7 +113,7 @@ function Services() {
                                 <div className="text-[23px]">Все варианты</div>
                             </div>
                         </div>
-                    </div>
+                    </Link>
 
                     {data.map((data) =>
                         <ServicesCard name={data.name} description={data.description} photo={data.photo} />
