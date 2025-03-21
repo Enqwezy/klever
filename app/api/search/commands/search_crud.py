@@ -3,15 +3,16 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import joinedload
 import logging
 from model.model import Service
+from typing import List
 
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
 
-async def get_service(
+async def get_services(
     db: AsyncSession,
-    city_id: int | None = None,
-    variant_id: int | None = None,
+    city_ids: List[int] | None = None,
+    variant_ids: List[int] | None = None,
     min_price: float | None = None,
     max_price: float | None = None,
     min_rating: float | None = None,
@@ -26,10 +27,13 @@ async def get_service(
             joinedload(Service.reviews)
         )
     )
-    if city_id is not None:
-        query = query.filter(Service.city_id == city_id)
-    if variant_id is not None:
-        query = query.filter(Service.variant_id == variant_id)
+
+    if city_ids:
+        logger.debug(f"Фильтр по city_ids: {city_ids}")
+        query = query.filter(Service.city_id.in_(city_ids))
+    if variant_ids:
+        logger.debug(f"Фильтр по variant_ids: {variant_ids}")
+        query = query.filter(Service.variant_id.in_(variant_ids))
     if min_price is not None:
         query = query.filter(Service.price >= min_price)
     if max_price is not None:
@@ -38,14 +42,14 @@ async def get_service(
         query = query.filter(Service.rating >= min_rating)
     if max_rating is not None:
         query = query.filter(Service.rating <= max_rating)
-    
+
     stmt = await db.execute(query)
     services = stmt.scalars().unique().all()
 
     if not services:
         logger.info(f"Сервисы по заданным фильтрам не найдены")
         return []
-    
+
     services_with_data = [
         {
             "service": service,
