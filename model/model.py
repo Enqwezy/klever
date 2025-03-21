@@ -89,7 +89,7 @@ class Service(Base):
 class Review(Base):
     __tablename__ = "reviews"
 
-    id = Column(Integer, primary_key=True, index=True)
+    id = Column(Integer, primary_key=True, index=True, autoincrement=True,)
     description = Column(Text, default="", nullable=True)
     created_at = Column(DateTime(timezone=True), default=func.now(), nullable=False)
 

@@ -13,5 +13,9 @@ router = APIRouter()
     summary="Получить все варианты по ID категории",
     response_model=list[VariantsResponse]
 )
-async def read_variants_by_category(category_id: int, db: AsyncSession = Depends(get_db)):
-    return await get_variants_by_category(category_id=category_id, db=db)
+async def read_variants_by_category(
+    category_id: int,
+    db: AsyncSession = Depends(get_db)
+):
+    variants = await get_variants_by_category(category_id=category_id, db=db)
+    return variants

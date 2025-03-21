@@ -11,7 +11,6 @@ class SpecialistResponse(BaseModel):
     photo: Optional[str]
     instagram_link: Optional[str]
     whatsapp_link: Optional[str]
-    rating: Optional[float]
     created_at: datetime
 
     class Config:

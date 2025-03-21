@@ -9,38 +9,40 @@ from fastapi import HTTPException
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
 
-async def get_services_by_category(db: AsyncSession, category_id: int):
-    stmt = await db.execute(select(Variant).filter(Variant.category_id == category_id))
-    variants = stmt.scalars().all()
+async def get_services_by_category(category_id: int, db: AsyncSession):
+    variant_stmt = await db.execute(
+        select(Variant).filter(Variant.category_id == category_id)
+    )
+    variants = variant_stmt.scalars().all()
 
     if not variants:
         logger.info(f"Варианты для категории с ID {category_id} не найдены, сервисов нет")
         return []
-    
+
     variant_ids = [variant.id for variant in variants]
 
     stmt = await db.execute(
         select(Service)
         .filter(Service.variant_id.in_(variant_ids))
-        .options(joinedload(Service.city))
-        .outerjoin(Review, Review.service_id==Service.id)
-        .group_by(Service)
-        .add_columns(func.count(Review.id).label("review_count"))
+        .options(
+            joinedload(Service.city),    
+            joinedload(Service.reviews)  
+        )
     )
-    results = stmt.all
+    services = stmt.scalars().unique().all()
 
-    if not results:
+    if not services:
         logger.info(f"Сервисы для вариантов категории с ID {category_id} не найдены")
         return []
-    
+
     services_with_data = [
         {
             "service": service,
-            "review_count": review_count
+            "review_count": len(service.reviews)  
         }
-        for service, review_count in results
+        for service in services
     ]
-
+    
     logger.info(f"Найдено {len(services_with_data)} сервисов для категории с ID {category_id}")
     return services_with_data
 

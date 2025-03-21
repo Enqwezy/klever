@@ -6,6 +6,7 @@ from app.api.specialist.specialist import router as specialist_router
 from app.api.variant.variant import router as variant_router
 from app.api.service.service import router as service_router
 from app.api.favourite.favourite import router as favourite_router
+from app.api.review.review import router as review_router
 
 
 route = APIRouter()
@@ -17,3 +18,4 @@ route.include_router(specialist_router, prefix="", tags=["Specialist"])
 route.include_router(variant_router, prefix="", tags=["Variant"])
 route.include_router(service_router, prefix="", tags=["Service"])
 route.include_router(favourite_router, prefix="", tags=["Favourite"])
+route.include_router(review_router, prefix="", tags=["Review"])

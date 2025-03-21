@@ -29,8 +29,7 @@ async def create_specialist(specialist_data: dict, db: AsyncSession):
         email=specialist_data["email"],
         photo=specialist_data.get("photo"),  
         instagram_link=specialist_data.get("instagram_link"),  
-        whatsapp_link=specialist_data.get("whatsapp_link"),  
-        rating=specialist_data.get("rating"),  
+        whatsapp_link=specialist_data.get("whatsapp_link"),    
         created_at=func.now()  
     )
     

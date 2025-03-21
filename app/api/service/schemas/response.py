@@ -18,8 +18,8 @@ class SpecialistResponse(BaseModel):
     phone_number: Optional[str] = None
     email: Optional[str] = None
     photo: Optional[str] = None
-    instagram_link: str
-    whatsup_link: str
+    instagram_link: Optional[str] = None
+    whatsup_link: Optional[str] = None
 
 '''Получить все сервисы'''
 class ServicesResponse(BaseModel):

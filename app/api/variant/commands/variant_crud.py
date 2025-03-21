@@ -7,14 +7,15 @@ from model.model import Variant
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
 
-async def get_variants_by_category(db: AsyncSession, category_id: int):
-    stmt = await db.execute(select(Variant.category_id == category_id))
-
+async def get_variants_by_category(category_id: int, db: AsyncSession):
+    stmt = await db.execute(
+        select(Variant).filter(Variant.category_id == category_id)
+    )
     variants = stmt.scalars().all()
 
     if not variants:
         logger.info(f"Варианты для категории с ID {category_id} не найдены")
-        return []
+        return []  
     
     logger.info(f"Найдено {len(variants)} вариантов для категории с ID {category_id}")
     return variants

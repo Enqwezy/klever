@@ -9,7 +9,6 @@ class SpecialistCreate(BaseModel):
     photo: Optional[str] = None
     instagram_link: Optional[str] = None
     whatsapp_link: Optional[str] = None
-    rating: Optional[float] = None
 
     class Config:
         orm_mode = True
