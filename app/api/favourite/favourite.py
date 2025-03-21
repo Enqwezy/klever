@@ -11,7 +11,7 @@ from app.api.favourite.schemas.delete import DeleteFavouriteResponse
 router = APIRouter()
 
 @router.post(
-    "/favourites",
+    "/add-favourites",
     summary="Добавить сервис в избранное",
     response_model=CreateFavourite
 )
