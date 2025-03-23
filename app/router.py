@@ -9,6 +9,9 @@ from app.api.favourite.favourite import router as favourite_router
 from app.api.review.review import router as review_router
 from app.api.search.search import router as search_router
 
+from app.api.g4f.g4f import router as chat_router
+from app.api.g4f.tutor import router as tutor_router 
+
 
 route = APIRouter()
 
@@ -21,3 +24,6 @@ route.include_router(service_router, prefix="", tags=["Service"])
 route.include_router(favourite_router, prefix="", tags=["Favourite"])
 route.include_router(review_router, prefix="", tags=["Review"])
 route.include_router(search_router, prefix="", tags=["Search"])
+
+route.include_router(chat_router, prefix="", tags=["Chat"])
+route.include_router(tutor_router, prefix="", tags=["Tutor"])
