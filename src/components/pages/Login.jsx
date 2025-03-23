@@ -5,19 +5,19 @@ import { Link } from 'react-router-dom'
 
 function Login() {
     return (
-        <div className='w-full min-h-screen bg-[#76C6FF] flex flex-row justify-center items-center gap-[5vw] '>
-            <div className='max-w-[50vh]'>
-                <img src={logo} alt="" />
+        <div className='w-full min-h-screen bg-[#76C6FF] flex xl:flex-row flex-col justify-center items-center gap-[5vw] lg:gap-y-[1vh] '>
+            <div className=''>
+                <img src={logo} alt="" className='2xl:max-w-[20vw] max-w-[50vw] md:max-w-[30vw] lg:max-w-[20vw]' />
             </div>
             <div className=''>
-                <div className='rounded-[40px] min-h-[70vh] w-[30vw] bg-white p-[25px] px-[50px] flex justify-center flex-col  shadow-container '>
-                    <div className='font-eastman_medium text-[25px] px-[5vw] text-[#0A0A0A] text-center leading-8'>
+                <div className='rounded-[40px] 2xl:min-h-[40vh] min-h-[50vh] sm:w-[50vw] 2xl:w-[550px] w-[300px] md:w-[400px] bg-white p-[25px] px-[10vw] sm:px-[50px] flex justify-center flex-col  shadow-container '>
+                    <div className='font-eastman_medium text-[25px] 2xl:text-[32px] 2xl:mx-5 text-[#0A0A0A] text-center leading-8'>
                         Log in
                     </div>
-                    <div className='flex flex-row justify-center gap-x-[3vw] my-[10px]'>
+                    <div className='flex flex-row justify-center gap-x-[3vw] my-[30px]'>
                         <div className="flex justify-center items-center">
                             <button
-                                className="flex flex-row gap-x-[30px]   bg-[#7583CA] rounded-[15px] p-2 min-w-[7vw] text-[14px] justify-center items-center font-thin text-[#FFFFFFBF] hover:bg-[#8593DA] hover:shadow-lg transition-all duration-200"
+                                className="flex flex-row gap-x-[30px]   bg-[#7583CA] rounded-[15px] p-2 min-w-[7vw] text-[14px]  justify-center items-center font-thin text-[#FFFFFFBF] hover:bg-[#8593DA] hover:shadow-lg transition-all duration-200"
                             >
                                 <svg
                                     width="13"
@@ -67,14 +67,14 @@ function Login() {
                     <div className="flex flex-col gap-[15px]">
                         <div className="flex justify-center items-center mt-[30px]">
                             <button
-                                className="bg-[#6A6A6A] rounded-[12px] w-[100px] p-2 flex justify-center items-center h-[31px] text-white text-[15px] font-light hover:bg-[#7A7A7A] hover:shadow-md transition-all duration-200"
+                                className="bg-[#6A6A6A] rounded-[12px] w-[100px] p-2 flex justify-center items-center h-[31px] 2xl:h-[35px] text-white text-[15px] font-light hover:bg-[#7A7A7A] hover:shadow-md transition-all duration-200 2xl:text-[20px]"
                             >
                                 Log in
                             </button>
                         </div>
 
                         <div className="flex justify-center items-center mt-[15px]">
-                            <p className="text-[#0A0A0A] text-[12px] font-eastman_regular">
+                            <p className="text-[#0A0A0A] text-[12px] 2xl:text-[15px] font-eastman_regular">
                                 <Link to="/register" className="text-[#FF0000] hover:underline">
                                     Create an account
                                 </Link>

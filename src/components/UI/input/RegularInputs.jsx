@@ -51,10 +51,10 @@ function RegularInputs({ name, placeholder, type = 'text', borderColor = 'border
 
   return (
     <div className="flex flex-col gap-[7px]">
-      <div className="ml-[7px] text-[14px]">{name}</div>
+      <div className="ml-[7px] text-[14px] 2xl:text-[20px]">{name}</div>
       <input
         type={type}
-        className={`border-[2px] ${dynamicBorderColor} h-[32px] text-[13px] p-2 rounded-[10px] w-full focus:outline-none hover:border-blue-500 hover:shadow-md hover:bg-gray-100 transition-all duration-200`}
+        className={`border-[2px] ${dynamicBorderColor} h-[32px] text-[13px] p-2 2xl:text-[17px] 2xl:p-3 2xl:h-[40px] rounded-[10px] w-full focus:outline-none hover:border-blue-500 hover:shadow-md hover:bg-gray-100 transition-all duration-200`}
         placeholder={placeholder}
         value={value}
         onChange={handleChange}
