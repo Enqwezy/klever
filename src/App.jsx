@@ -4,6 +4,7 @@ import Login from './components/pages/Login';
 import Home from './components/pages/Home';
 import Services from './components/pages/Services';
 import ServicesList from './components/pages/ServicesList';
+import ServicePage from './components/pages/ServicePage';
 
 
 function App() {
@@ -15,6 +16,8 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/beauty" element={<Services />} />
         <Route path="/beauty/all" element={<ServicesList />} />
+        <Route path="/beauty/one" element={<ServicePage />} />
+
       </Routes> 
     </div>
   );

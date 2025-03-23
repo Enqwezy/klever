@@ -3,7 +3,7 @@ import React from 'react'
 
 function RequestCard({ data }) {
     return (    
-        <div className='bg-[#f8f8f8] font-eastman_regular flex flex-col gap-3 shadow-card rounded-[15px] mt-5 cursor-pointer md:flex-row-reverse md:min-h-[30vh] 2xl:max-h-[25vh] 2xl:pl-5 relative pb-3 md:pb-0 2xl:justify-between'>
+        <div className='bg-[#f8f8f8] font-eastman_regular flex flex-col gap-3 shadow-card rounded-[15px] mt-5 cursor-pointer md:flex-row-reverse md:min-h-[30vh]  2xl:pl-5 relative pb-3 md:pb-0 2xl:justify-between'>
             <div>
                 <img src={data.photo} alt="" className='rounded-t-[15px] object-cover md:rounded-r-[15px] md:h-full md:w-[100vw] lg:max-w-[30vw] 2xl:max-w-[20vw]' />
             </div>
