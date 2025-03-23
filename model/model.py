@@ -74,6 +74,7 @@ class Service(Base):
     photo = Column(Text, nullable=True)
     rating = Column(Float, nullable=True)
     created_at = Column(DateTime(timezone=True), default=func.now(), nullable=False)
+    search_rank = Column(Float, default=0.0, nullable=True)
 
     city_id = Column(Integer, ForeignKey("cities.id"), nullable=False)
     variant_id = Column(Integer, ForeignKey("variants.id"), nullable=False)

@@ -25,9 +25,19 @@ async def read_services_by_category(category_id: int, db:AsyncSession = Depends(
     ]
 
 @router.get(
-    "/categories/{service_id}/service",
-    summary="Получить сервис по ID",
+    "/services/{service_id}",
+    summary="Получить сервис по ID и увеличить search_rank",
     response_model=ServiceResponse
 )
-async def read_service_by_id(service_id: int, db: AsyncSession = Depends(get_db)):
-    return await get_service_by_id(service_id=service_id, db=db)
+async def get_service(
+    service_id: int,
+    db: AsyncSession = Depends(get_db)
+):
+    service_data = await get_service_by_id(service_id=service_id, db=db)
+    return {
+        **service_data["service"].__dict__,
+        "city": service_data["service"].city.__dict__,
+        "variant": service_data["service"].variant.__dict__,
+        "specialist": service_data["service"].specialist.__dict__,
+        "review_count": service_data["review_count"]
+    }

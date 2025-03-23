@@ -1,7 +1,7 @@
 import logging
 from model.model import Service, Review, Variant
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select, func
+from sqlalchemy import select, func, update
 from sqlalchemy.orm import joinedload 
 from fastapi import HTTPException
 
@@ -47,14 +47,33 @@ async def get_services_by_category(category_id: int, db: AsyncSession):
     return services_with_data
 
 async def get_service_by_id(service_id: int, db: AsyncSession):
-    stmt = await db.execute(select(Service).filter(Service.id == service_id).options(
-        joinedload(Service.city),
-        joinedload(Service.specialist)
-    ))
+    stmt = await db.execute(
+        select(Service)
+        .filter(Service.id == service_id)
+        .options(
+            joinedload(Service.city),
+            joinedload(Service.variant),
+            joinedload(Service.specialist),
+            joinedload(Service.reviews)
+        )
+    )
     service = stmt.scalars().first()
 
     if not service:
         logger.info(f"Сервис с ID {service_id} не найден")
         raise HTTPException(status_code=404, detail="Сервис не найден")
-    logger.info(f"Найден сервис с ID {service_id}: {service.name}")
-    return service
+
+    await db.execute(
+        update(Service)
+        .where(Service.id == service_id)
+        .values(search_rank=Service.search_rank + 0.1)
+    )
+    await db.commit()
+
+    await db.refresh(service)
+
+    logger.info(f"Сервис с ID {service_id} получен, search_rank увеличен до {service.search_rank}")
+    return {
+        "service": service,
+        "review_count": len(service.reviews)
+    }
