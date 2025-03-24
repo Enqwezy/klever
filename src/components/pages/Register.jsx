@@ -1,52 +1,83 @@
-import React from 'react'
-import logo from '../../assets/img/logo.png'
-import RegularInputs from '../UI/input/RegularInputs'
-import { Link } from 'react-router-dom'
+import React from 'react';
+import logo from '../../assets/img/logo.png';
+import RegularInputs from '../UI/input/RegularInputs';
+import { Link } from 'react-router-dom';
 
 function Register() {
     return (
-        <div className='w-full min-h-screen bg-[#76C6FF] flex flex-row justify-center items-center'>
-            <div className=''>
-                <div className='rounded-[40px] min-h-[80vh] w-[30vw] bg-white p-[25px] px-[50px] flex justify-center flex-col  shadow-container '>
-                    <div className='font-eastman_medium text-[25px] px-[5vw] text-[#0A0A0A] text-center leading-8'>
+        <div className="w-full min-h-screen bg-[#76C6FF] flex flex-col-reverse md:flex-row-reverse justify-center items-center gap-4 md:gap-8 lg:gap-[5vw] p-4">
+            
+            <div className="hidden md:block">
+                <img
+                    src={logo}
+                    alt="Logo"
+                    className="max-w-[50vw] sm:max-w-[40vw] md:max-w-[30vw] lg:max-w-[20vw] xl:max-w-[19vw] 2xl:max-w-[20vw]"
+                />
+            </div>
+            <div className="w-full max-w-[90vw] sm:max-w-[70vw] md:max-w-[50vw] lg:max-w-[40vw] xl:max-w-[400px] 2xl:max-w-[450px]">
+                <div className="rounded-[20px] sm:rounded-[30px] xl:rounded-[40px] min-h-[60vh] sm:min-h-[70vh] xl:min-h-[80vh] bg-white p-4 sm:p-6 xl:p-[25px] flex justify-center flex-col shadow-container gap-4 sm:gap-5 xl:gap-6">
+                    <div className="font-eastman_medium text-[20px] sm:text-[25px] xl:text-[30px] text-[#0A0A0A] text-center leading-tight sm:leading-8">
                         Create an account
                     </div>
-                    <div className='flex flex-col gap-y-[20px]'>
-                        <div className='font-eastman_regular'>
-                            <RegularInputs name={'Name'} placeholder={'Enter message'} type='text' borderColor={'border-[#6A6A6A]'} />
+
+                    <div className="flex flex-col gap-y-4 sm:gap-y-5 xl:gap-y-[20px]">
+                        <div className="font-eastman_regular">
+                            <RegularInputs
+                                name="Name"
+                                placeholder="Enter message"
+                                type="text"
+                                borderColor="border-[#6A6A6A]"
+                            />
                         </div>
-                        <div className='font-eastman_regular'>
-                            <RegularInputs name={'Phone'} placeholder={'Enter message'} type='tel' borderColor={'border-[#6A6A6A]'} />
+                        <div className="font-eastman_regular">
+                            <RegularInputs
+                                name="Phone"
+                                placeholder="Enter message"
+                                type="tel"
+                                borderColor="border-[#6A6A6A]"
+                            />
                         </div>
-                        <div className='font-eastman_regular'>
-                            <RegularInputs name={'e-mail'} placeholder={'Enter message'} type='email' borderColor={'border-[#6A6A6A]'} />
+                        <div className="font-eastman_regular">
+                            <RegularInputs
+                                name="e-mail"
+                                placeholder="Enter message"
+                                type="email"
+                                borderColor="border-[#6A6A6A]"
+                            />
                         </div>
-                        <div className='font-eastman_regular'>
-                            <RegularInputs name={'Password'} placeholder={'Enter message'} type='password' borderColor={'border-[#6A6A6A]'} />
+                        <div className="font-eastman_regular">
+                            <RegularInputs
+                                name="Password"
+                                placeholder="Enter message"
+                                type="password"
+                                borderColor="border-[#6A6A6A]"
+                            />
                         </div>
-                        <div className='font-eastman_regular'>
-                            <RegularInputs name={'Address'} placeholder={'Enter message'} type='text' borderColor={'border-[#6A6A6A]'} />
+                        <div className="font-eastman_regular">
+                            <RegularInputs
+                                name="Address"
+                                placeholder="Enter message"
+                                type="text"
+                                borderColor="border-[#6A6A6A]"
+                            />
                         </div>
                     </div>
-                    
-                    <div className="flex flex-col gap-[15px]">
-                        <div className="flex justify-center items-center mt-[30px]">
-                            <button
-                                className="bg-[#6A6A6A] rounded-[12px] w-[100px] p-2 flex justify-center items-center h-[31px] text-white text-[15px] font-light hover:bg-[#7A7A7A] hover:shadow-md transition-all duration-200"
-                            >
+
+                    <div className="flex flex-col gap-3 sm:gap-4 xl:gap-[15px] text-[13px] sm:text-[14px] xl:text-[17px] 2xl:text-[20px]">
+                        <div className="flex justify-center items-center mt-4 sm:mt-6 xl:mt-[30px]">
+                            <button className="bg-[#6A6A6A] rounded-[12px] w-[90px] sm:w-[100px] xl:w-[120px] p-2 flex justify-center items-center h-[28px] sm:h-[31px] xl:h-[35px] text-white font-light hover:bg-[#7A7A7A] hover:shadow-md transition-all duration-200">
                                 Register
                             </button>
                         </div>
                         <div className="flex justify-center items-center">
-                            <button
-                                className="flex flex-row gap-x-[30px] pl-3 bg-[#7583CA] rounded-[15px] p-1 w-[220px] h-[32px] text-[14px] items-center font-thin text-[#FFFFFFBF] hover:bg-[#8593DA] hover:shadow-lg transition-all duration-200"
-                            >
+                            <button className="flex flex-row gap-x-4 sm:gap-x-6 xl:gap-x-[30px] pl-2 sm:pl-3 bg-[#7583CA] rounded-[12px] sm:rounded-[15px] p-1 sm:p-2 w-[180px] sm:w-[200px] xl:w-[240px] 2xl:w-[270px] h-[28px] sm:h-[32px] xl:h-[35px] items-center font-thin text-[#FFFFFFBF] hover:bg-[#8593DA] hover:shadow-lg transition-all duration-200">
                                 <svg
-                                    width="13"
-                                    height="20"
+                                    width="12"
+                                    height="18"
                                     viewBox="0 0 13 24"
                                     fill="none"
                                     xmlns="http://www.w3.org/2000/svg"
+                                    className="shrink-0"
                                 >
                                     <path
                                         d="M8.08794 24V13.0703H11.7752L12.3233 8.79094H8.08794V6.06518C8.08794 4.83032 8.43199 3.98485 10.2043 3.98485H12.45V0.169586C11.3573 0.0524886 10.259 -0.00405133 9.16011 0.00022559C5.90093 0.00022559 3.66324 1.98987 3.66324 5.64245V8.78294H0V13.0623H3.67124V24H8.08794Z"
@@ -54,19 +85,18 @@ function Register() {
                                         fillOpacity="0.75"
                                     />
                                 </svg>
-                                Contine with Facebook
+                                Continue with Facebook
                             </button>
                         </div>
                         <div className="flex justify-center items-center">
-                            <button
-                                className="flex flex-row gap-x-[30px] pl-2 border-[1px] border-[#232323BF] rounded-[15px] p-1 w-[220px] h-[32px] text-[14px] items-center font-thin text-[#232323BF] hover:border-[#232323] hover:shadow-md hover:bg-gray-50 transition-all duration-200"
-                            >
+                            <button className="flex flex-row gap-x-4 sm:gap-x-6 xl:gap-x-[30px] pl-2 border-[1px] border-[#232323BF] rounded-[12px] sm:rounded-[15px] p-1 sm:p-2 w-[180px] sm:w-[200px] xl:w-[220px] 2xl:w-[250px] h-[28px] sm:h-[32px] xl:h-[35px] items-center font-thin text-[#232323BF] hover:border-[#232323] hover:shadow-md hover:bg-gray-50 transition-all duration-200">
                                 <svg
-                                    width="20"
-                                    height="20"
+                                    width="16"
+                                    height="16"
                                     viewBox="0 0 24 25"
                                     fill="none"
                                     xmlns="http://www.w3.org/2000/svg"
+                                    className="shrink-0"
                                 >
                                     <path
                                         d="M23.7224 10.045H12.2783V14.7879H18.8641C18.2512 17.8018 15.6853 19.5334 12.2783 19.5334C11.325 19.5351 10.3807 19.3485 9.49968 18.9843C8.61863 18.6202 7.81812 18.0858 7.14408 17.4116C6.47004 16.7374 5.93573 15.9368 5.57178 15.0557C5.20784 14.1746 5.02143 13.2303 5.02324 12.277C5.02161 11.3237 5.20815 10.3796 5.57218 9.49862C5.9362 8.61766 6.47055 7.81721 7.14457 7.14319C7.81859 6.46917 8.61903 5.93483 9.5 5.5708C10.381 5.20678 11.3251 5.02023 12.2783 5.02186C14.0086 5.02186 15.5726 5.63618 16.7999 6.64082L20.3731 3.06893C18.1962 1.17098 15.4049 5.23044e-05 12.2783 5.23044e-05C10.6646 -0.00466464 9.06586 0.309703 7.57406 0.925073C6.08226 1.54044 4.72684 2.44467 3.58576 3.58576C2.44468 4.72684 1.54045 6.08226 0.925077 7.57406C0.309707 9.06586 -0.00466053 10.6646 5.64179e-05 12.2783C-0.00484293 13.8921 0.3094 15.4909 0.924705 16.9828C1.54001 18.4747 2.44423 19.8302 3.58535 20.9713C4.72647 22.1124 6.08197 23.0166 7.57385 23.632C9.06573 24.2473 10.6645 24.5615 12.2783 24.5566C18.4175 24.5566 24 20.0914 24 12.2783C24 11.5527 23.8887 10.7707 23.7224 10.045Z"
@@ -77,25 +107,38 @@ function Register() {
                                 Continue with Google
                             </button>
                         </div>
-                        <div className="flex justify-center items-center mt-[15px]">
-                            <p className="text-[#0A0A0A] text-[14px] font-eastman_regular">
+                        <div className="flex justify-center items-center mt-3 sm:mt-4 xl:mt-[15px] text-[12px] sm:text-[14px] xl:text-[17px]">
+                            <p className="text-[#0A0A0A] font-eastman_regular">
                                 Do you have an account?{' '}
-                                
                                 <Link to="/login" className="text-blue-600 hover:underline">
                                     Login
                                 </Link>
                             </p>
                         </div>
                     </div>
-                    
                 </div>
             </div>
-            <div className='max-w-[50vh]'>
-                <img src={logo} alt="" />
-            </div>
 
+            <div className="block md:hidden mt-2">
+                <img
+                    src={logo}
+                    alt="Logo"
+                    className="max-w-[50vw] sm:max-w-[40vw] md:max-w-[30vw] lg:max-w-[20vw] xl:max-w-[15vw] 2xl:max-w-[20vw]"
+                />
+            </div>
+            <div className='md:absolute top-9 2xl:left-9 md:left-[8vw] lg:left-9'>
+                <Link to={'/'} className='flex flex-row bg-white text-black gap-3 xl:text-[15px] 2xl:text-[20px] rounded-xl p-2 font-eastman_regular justify-center items-center'>
+                    <div className='xl:min-w-[23px] xl:min-h-[23px] 2xl:min-w-[30px] 2xl:min-h-[30px]'>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+                        </svg>
+
+                    </div>
+                    <div>На главную</div>
+                </Link>
+            </div>
         </div>
-    )
+    );
 }
 
-export default Register
+export default Register;

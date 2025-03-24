@@ -5,7 +5,18 @@ import { Link } from 'react-router-dom'
 
 function Login() {
     return (
-        <div className='w-full min-h-screen bg-[#76C6FF] flex xl:flex-row flex-col justify-center items-center gap-[5vw] lg:gap-y-[1vh] '>
+        <div className='w-full min-h-screen bg-[#76C6FF] flex xl:flex-row flex-col justify-center items-center gap-[1vw] lg:gap-y-[1vh] '>
+            <div className='md:absolute top-9 2xl:left-9 md:left-[8vw] lg:left-9'>
+                            <Link to={'/'} className='flex flex-row bg-white text-black gap-3 xl:text-[15px] 2xl:text-[20px] rounded-xl p-2 font-eastman_regular justify-center items-center'>
+                                <div className='xl:min-w-[23px] xl:min-h-[23px] 2xl:min-w-[30px] 2xl:min-h-[30px]'>
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+                                    </svg>
+            
+                                </div>
+                                <div>На главную</div>
+                            </Link>
+                        </div>
             <div className=''>
                 <img src={logo} alt="" className='2xl:max-w-[20vw] max-w-[50vw] md:max-w-[30vw] lg:max-w-[20vw]' />
             </div>
