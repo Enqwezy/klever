@@ -11,7 +11,7 @@ router = APIRouter()
 
 @router.post(
     "/chat",
-    summary="Общение с ботом для поиска репетиторов",
+    summary="Общение с ботом для поиска услуг",
     response_model=ChatResponse
 )
 async def chat_with_bot(
@@ -19,6 +19,6 @@ async def chat_with_bot(
     db: AsyncSession = Depends(get_db)
 ):
     reply = await process_chat_message(message=request.message, db=db)
-    if isinstance(reply, dict):  
+    if isinstance(reply, dict):
         return reply
     return {"reply": reply}

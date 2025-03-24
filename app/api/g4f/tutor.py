@@ -13,17 +13,25 @@ router = APIRouter()
 
 @router.get(
     "/tutors",
-    summary="Получить топ репетиторов по популярности (search_rank)",
+    summary="Получить топ услуг по поисковому запросу с использованием Full-Text Search",
     response_model=list[TutorResponse]
 )
 async def get_tutors(
     limit: int = 10,
+    query: Optional[str] = None,  
     db: AsyncSession = Depends(get_db)
 ):
-    tutors_with_data = await get_top_tutors(db=db, limit=limit)
+    tutors_with_data = await get_top_tutors(db=db, limit=limit, query=query)
     return [
         {
-            **tutor["service"].__dict__,
+            "id": tutor["service"].id,
+            "name": tutor["service"].name,
+            "description": tutor["service"].description,
+            "price": str(tutor["service"].price) if tutor["service"].price else None,
+            "photo": tutor["service"].photo,
+            "rating": tutor["service"].rating,
+            "search_rank": tutor["service"].search_rank,
+            "created_at": tutor["service"].created_at.isoformat(),
             "city": tutor["service"].city.__dict__,
             "variant": tutor["service"].variant.__dict__,
             "specialist": tutor["service"].specialist.__dict__,
