@@ -39,7 +39,4 @@ class TutorResponse(BaseModel):
     created_at: datetime
     city: CityResponse
     review_count: int
-    rating: Optional[float] = None
-    search_rank: Optional[float] = None  
-    variant: Optional[VariantResponse] = None  
-    specialist: Optional[SpecialistResponse] = None
+    rating: Optional[float] = None  

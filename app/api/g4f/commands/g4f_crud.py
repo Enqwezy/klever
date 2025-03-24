@@ -40,7 +40,7 @@ async def process_chat_message(message: str, db: AsyncSession):
         ]
 
         tutors_text = "\n".join(
-            f"- **ID {tutor['id']}**: {tutor['name']} ({tutor['description']}, цена: {tutor['price']}, город: {tutor['city']['name']}, рейтинг: {tutor['rating'] or 'нет'})"
+            f"- **{tutor['name']}"
             for tutor in tutors_info
         )
         bot_response = f"Вот\nНайденные репетиторы:\n{tutors_text}"

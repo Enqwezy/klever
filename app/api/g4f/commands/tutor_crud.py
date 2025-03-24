@@ -2,7 +2,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
 from sqlalchemy.orm import joinedload
 import logging
-from model.model import Service, Variant  # Импорт Variant
+from model.model import Service, Variant  
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
