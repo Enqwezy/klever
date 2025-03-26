@@ -5,7 +5,7 @@ import logoMiniBlack from '../../assets/img/logo-mini-black.png'
 function Footer() {
     return (
         <div className='bg-[#F4F4F4] w-full min-h-[25vw] p-[30px] lg:px-[50px] md:px-[35px] px-[70px] xl:px-[100px] xl:p-[50px] '>
-            <div className='flex flex-col gap-7 md:gap-14 md:flex-row text-[17px] 2xl:text-[23px]'>
+            <div className='flex flex-col gap-7 md:gap-14 md:flex-row '>
                 <div className='flex flex-col gap-y-3'>
                     <div>
                         <img src={logoMiniBlack} alt="" className='w-[30vw] md:w-[20vw] lg:w-[16vw] xl:w-[10vw] ' />
@@ -15,25 +15,25 @@ function Footer() {
                 </div>
                 <div className='grid grid-cols-1 gap-y-7 gap-0  sm:gap-y-7 md:grid-cols-2 lg:grid-cols-3'>
 
-                <div className='font-eastman_regular flex flex-col gap-2 2xl:gap-5 ml-0 xl:ml-[5vw]'>
+                <div className='font-eastman_regular flex flex-col gap-2 text-[17px] ml-0 xl:ml-[5vw]'>
                     <div>О нас</div>
                     <div>Блог</div>
                     <div>Безопасность</div>
                     <div>Контакты</div>
                 </div>
-                <div className='font-eastman_regular flex flex-col gap-2 2xl:gap-5'>
+                <div className='font-eastman_regular flex flex-col gap-2 text-[17px]'>
                     <div>Вакансии</div>
                     <div>Услуги</div>
                     <div>Курьеры</div>
                     <div>Трекинг</div>
                 </div>
-                <div className='font-eastman_medium flex flex-col gap-2 2xl:gap-5' >
+                <div className='font-eastman_medium flex flex-col gap-2 text-[17px]' >
                     <div>Политика конфиденциальности</div>
                     <div>Положения и условия</div>
                     <div>Подпишитесь на рассылку новостей</div>
                     <div className='flex flex-row gap-0 items-center '>
                         <div>
-                            <input type="text" className='rounded-l-[10px] h-[6vh] w-[50vw] placeholder:font-eastman_regular pl-3 md:h-[5vh] md:w-[170px] 2xl:w-[250px]' placeholder='e-mail' />
+                            <input type="text" className='rounded-l-[10px] h-[6vh] w-[50vw] placeholder:font-eastman_regular pl-3 md:h-[5vh] md:w-[170px]' placeholder='e-mail' />
                         </div>
                         <div className='bg-[#FF0000] h-[6vh] flex items-center px-4 rounded-r-[10px] cursor-pointer md:h-[5vh]'>
                             <svg width="10" height="20" viewBox="0 0 10 20" fill="none" xmlns="http://www.w3.org/2000/svg">

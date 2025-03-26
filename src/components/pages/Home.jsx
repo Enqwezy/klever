@@ -28,49 +28,49 @@ function Home() {
 
     return (
         <div>
-            <div className="bg-[#1D217C] w-full h-[60vh] sm:h-[70vh] lg:h-[80vh] px-4 sm:px-6 lg:px-12 xl:px-[100px] pt-6 lg:pt-[40px] relative">
+            <div className="bg-[#1D217C] w-full h-[60vh] sm:h-[70vh] lg:h-[90vh]  px-4 sm:px-6 lg:px-12 xl:px-[100px] pt-6 lg:pt-[40px] relative">
                 <div className="flex flex-col w-full relative">
                     <Header />
                     <div className="flex flex-col lg:flex-row w-full items-center lg:items-start">
-                        <div className="flex flex-col gap-y-3 sm:gap-y-4 xl:gap-y-7 items-center mt-[10vh] sm:mt-[15vh] lg:mt-[10vh] lg:ml-0 xl:ml-10 2xl:ml-[300px] text-[18px] sm:text-[22px] xl:text-[25px] 2xl:text-[35px]">
+                        <div className="flex flex-col gap-y-3 sm:gap-y-4 xl:gap-y-5 items-center mt-[10vh] sm:mt-[15vh] lg:mt-[10vh] xl:mt-[2ch] lg:ml-0 xl:ml-10  2xl:ml-[200px] text-[18px] sm:text-[22px] xl:text-[25px] ">
                             <Link
                                 to="/beauty"
-                                className="bg-white px-4 sm:px-6 xl:px-8 text-[#141414] font-eastman_regular rounded-[15px] sm:rounded-[30px]  flex justify-center w-[220px] sm:w-[250px] xl:w-[300px] 2xl:w-[550px] py-2 hover:bg-gray-100 transition-all duration-200"
+                                className="bg-white px-4 sm:px-6 xl:px-8 text-[#141414] font-eastman_regular rounded-[155x] sm:rounded-[20px]  flex justify-center w-[220px] sm:w-[250px] xl:w-[300px] 2xl:w-[350px] py-1 hover:bg-gray-100 transition-all duration-200"
                             >
                                 Красота и здоровье
                             </Link>
                             <Link
                                 to="/cleaning"
-                                className="bg-white px-4 sm:px-6 xl:px-8 text-[#141414] font-eastman_regular rounded-[15px] sm:rounded-[30px] flex justify-center w-[180px] sm:w-[195px] xl:w-[220px] 2xl:w-[300px]  py-2 hover:bg-gray-100 transition-all duration-200"
+                                className="bg-white px-4 sm:px-6 xl:px-8 text-[#141414] font-eastman_regular rounded-[15px] sm:rounded-[25px] text-[18px] sm:text-[22px] xl:text-[25px] flex justify-center w-[180px] sm:w-[195px] xl:w-[220px] py-1 hover:bg-gray-100 transition-all duration-200"
                             >
                                 Клининг
                             </Link>
                             <Link
                                 to="/tutoring"
-                                className="bg-white px-4 sm:px-6 xl:px-8 text-[#141414] font-eastman_regular rounded-[15px] sm:rounded-[30px] flex justify-center w-[240px] sm:w-[270px] xl:w-[300px] 2xl:w-[450px] py-2 hover:bg-gray-100 transition-all duration-200"
+                                className="bg-white px-4 sm:px-6 xl:px-8 text-[#141414] font-eastman_regular rounded-[15px] sm:rounded-[25px] text-[18px] sm:text-[22px] xl:text-[25px] flex justify-center w-[240px] sm:w-[270px] xl:w-[300px] py-1 hover:bg-gray-100 transition-all duration-200"
                             >
                                 Репетиторство
                             </Link>
                             <Link
                                 to="/building"
-                                className="bg-white px-4 sm:px-6 xl:px-8 text-[#141414] font-eastman_regular rounded-[15px] sm:rounded-[30px] flex justify-center w-[230px] sm:w-[260px] xl:w-[295px] 2xl:w-[430px] py-2 hover:bg-gray-100 transition-all duration-200"
+                                className="bg-white px-4 sm:px-6 xl:px-8 text-[#141414] font-eastman_regular rounded-[15px] sm:rounded-[25px] text-[18px] sm:text-[22px] xl:text-[25px] flex justify-center w-[230px] sm:w-[260px] xl:w-[295px] py-1 hover:bg-gray-100 transition-all duration-200"
                             >
                                 Строительство
                             </Link>
                             <Link
                                 to="/med_service"
-                                className="bg-white px-4 sm:px-6 xl:px-8 text-[#141414] font-eastman_regular rounded-[15px] sm:rounded-[30px] flex justify-center w-[200px] sm:w-[220px] xl:w-[240px] 2xl:w-[370px] py-2 hover:bg-gray-100 transition-all duration-200"
+                                className="bg-white px-4 sm:px-6 xl:px-8 text-[#141414] font-eastman_regular rounded-[15px] sm:rounded-[25px] text-[18px] sm:text-[22px] xl:text-[25px] flex justify-center w-[200px] sm:w-[220px] xl:w-[240px] py-1 hover:bg-gray-100 transition-all duration-200"
                             >
                                 Мед Услуги
                             </Link>
                         </div>
-                        <div className="absolute right-0 top-10 2xl:right-[150px] 2xl:top-[150px] hidden lg:block">
-                            <img src={klever} alt="Klever" className="w-[50vw] lg:w-[40vw] xl:w-[35vw] " />
+                        <div className="absolute right-0 top-10 2xl:top-[150px] hidden lg:block">
+                            <img src={klever} alt="Klever" className="w-[50vw] lg:w-[40vw] xl:w-[35vw]" />
                         </div>
                     </div>
                 </div>
             </div>
-            <div className="flex flex-col mt-[15vh] sm:mt-[20vh] lg:mt-[30vh] mx-4 sm:mx-8 lg:mx-[10vw] xl:mx-[23.6vw] 2xl:mx-[vw] relative">
+            <div className="flex flex-col mt-[15vh] sm:mt-[20vh] lg:mt-[30vh] mx-4 sm:mx-8 lg:mx-[10vw] xl:mx-[23.6vw] relative">
                 <div className="flex flex-col sm:flex-row items-center mb-3 sm:mb-5">
                     <div className="text-[20px] sm:text-[22px] xl:text-[25px] font-eastman_medium">
                         Популярные услуги
@@ -106,13 +106,13 @@ function Home() {
                         </button>
                     </div>
                 </div>
-                <div className="flex flex-row gap-x-3 sm:gap-x-4 xl:gap-x-5 overflow-hidden 2xl:w-full">
+                <div className="flex flex-row gap-x-3 sm:gap-x-4 xl:gap-x-5 overflow-hidden">
                     <div
-                        className="grid grid-cols-3 gap- transition-transform duration-500 "
+                        className="grid grid-cols-3 gap-5 transition-transform duration-500"
                         style={{ transform: `translateX(-${currentSlide * 100}%)` }}
                     >
                         {services.map((service, index) => (
-                            <div key={index} className="min-w-full sm:min-w-[50%] lg:max-w-[33.33%]">
+                            <div key={index} className="min-w-full sm:min-w-[50%] lg:min-w-[33.33%]">
                                 <ServicesCard
                                     photo={service.photo}
                                     name={service.name}
@@ -123,61 +123,72 @@ function Home() {
                     </div>
                 </div>
             </div>
-            <div className="flex flex-col lg:flex-row mt-[10vh] sm:mt-[15vh] lg:mt-[20vh]">
-                <div className="flex flex-col lg:flex-row gap-4 sm:gap-5 xl:gap-10 2xl:gap-[100px] w-full">
+            <div className="flex flex-col lg:flex-row mt-[10vh] sm:mt-[15vh] lg:mt-[20vh] px-4 sm:px-8 lg:px-12">
+                <div className="flex flex-col lg:flex-row gap-4 sm:gap-5 xl:gap-10 w-full">
                     <img
                         src={someClever}
                         alt="Some Clever"
                         className="w-full sm:w-[50vw] lg:w-[40vw] xl:w-[35vw] object-cover"
                     />
                     <div className="flex flex-col mt-6 lg:mt-[20vh]">
-                        <div className="text-[20px] sm:text-[22px] xl:text-[25px] 2xl:text-[45px] font-eastman_medium text-center">
+                        <div className="text-[20px] sm:text-[22px] xl:text-[25px] font-eastman_medium text-center">
                             О нас
                         </div>
-                        <div className="text-[13px] sm:text-[14px] xl:text-[15px] 2xl:text-[25px] font-eastman_regular w-full sm:w-[50vw] lg:w-[40vw] mt-4 sm:mt-6 xl:mt-[5vh] leading-relaxed">
+                        <div className="text-[13px] sm:text-[14px] xl:text-[15px] font-eastman_regular w-full sm:w-[50vw] lg:w-[40vw] mt-4 sm:mt-6 xl:mt-[5vh] leading-relaxed">
                             Профессиональный преподаватель, репетитор по скрипке. Обучаю игре на скрипке с нуля. Нотная грамота, сольфеджио. Развитие слуха, чувства ритма, формирование осанки у ребёнка также являются несомненными плюсами обучения игре на скрипке. Пишите и звоните! Что-нибудь надо написать, поэтому пишу. Все шикарно у меня, но пиздец как устала. И вот и все. Диля моя лучшая сестра. Вот так вот. Это рубрика обо мне.
                         </div>
                     </div>
                 </div>
             </div>
-            <div className="mb-6 sm:mb-8 xl:mb-10 flex flex-col 2xl:gap-y-[50px]">
-                <div className="text-[24px] sm:text-[30px] xl:text-[35px] 2xl:text-[45px] flex justify-center font-eastman_medium">
+            <div className="mb-6 sm:mb-8 xl:mb-10 px-4 sm:px-8 lg:px-12">
+                <div className="text-[24px] sm:text-[30px] xl:text-[35px] flex justify-center font-eastman_medium">
                     Хочешь стать специалистом в Klever?
                 </div>
-                <div className='flex flex-row justify-center mt-5 gap-10'>
-                    <div>
-                        <div className='rounded-[40px] min-h-[70vh] w-[30vw] bg-[#F4F4F4] p-[25px] px-[50px] flex justify-center flex-col  shadow-container '>
-                            <div className='font-eastman_regular text-[25px] px-[5vw] text-[#0A0A0A] text-center 2xl:text-[35px]'>
+                <div className="flex flex-col lg:flex-row justify-center mt-4 sm:mt-5 gap-4 sm:gap-6 xl:gap-10">
+                    <div className="w-full max-w-[90vw] sm:max-w-[70vw] lg:max-w-[30vw] xl:max-w-[350px]">
+                        <div className="rounded-[20px] sm:rounded-[30px] xl:rounded-[40px] min-h-[50vh] sm:min-h-[60vh] xl:min-h-[70vh] bg-[#F4F4F4] p-4 sm:p-6 xl:p-[25px] flex flex-col shadow-container gap-4 sm:gap-5">
+                            <div className="font-eastman_regular text-[20px] sm:text-[22px] xl:text-[25px] text-[#0A0A0A] text-center leading-tight sm:leading-8">
                                 Заявка
                             </div>
-
-                            <div className='flex flex-col gap-y-[20px]'>
-                                <div className='font-eastman_regular'>
-                                    <RegularInputs name={'Fullname'} placeholder={'Enter message'} type='text' borderColor={'border-[#6A6A6A]'} />
+                            <div className="flex flex-col gap-y-4 sm:gap-y-5 xl:gap-y-[20px]">
+                                <div className="font-eastman_regular">
+                                    <RegularInputs
+                                        name="Fullname"
+                                        placeholder="Enter message"
+                                        type="text"
+                                        borderColor="border-[#6A6A6A]"
+                                    />
                                 </div>
-                                <div className='font-eastman_regular'>
-                                    <RegularInputs name={'Phone'} placeholder={'Enter message'} type='tel' borderColor={'border-[#6A6A6A]'} />
+                                <div className="font-eastman_regular">
+                                    <RegularInputs
+                                        name="Phone"
+                                        placeholder="Enter message"
+                                        type="tel"
+                                        borderColor="border-[#6A6A6A]"
+                                    />
                                 </div>
-                                <div className='font-eastman_regular'>
-                                    <RegularInputs name={'e-mail'} placeholder={'Enter message'} type='email' borderColor={'border-[#6A6A6A]'} />
+                                <div className="font-eastman_regular">
+                                    <RegularInputs
+                                        name="Email"
+                                        placeholder="Enter message"
+                                        type="email"
+                                        borderColor="border-[#6A6A6A]"
+                                    />
                                 </div>
-
                             </div>
-
-                            <div className="flex flex-col gap-[15px]">
-                                <div className="flex justify-center items-center mt-[30px]">
-                                    <div
-                                        className="bg-[#6A6A6A] rounded-[15px] p-5 flex justify-center items-center h-[31px] text-white text-[15px] 2xl:text-[25px] font-light hover:bg-[#7A7A7A] hover:shadow-md transition-all duration-200"
-                                    >
-                                        Send
-                                    </div>
-                                </div>
-
+                            <div className="flex justify-center items-center mt-4 sm:mt-6 xl:mt-[30px]">
+                                <button className="bg-[#6A6A6A] rounded-[12px] w-[90px] sm:w-[100px] xl:w-[120px] p-2 flex justify-center items-center h-[28px] sm:h-[31px] xl:h-[35px] text-white text-[13px] sm:text-[14px] xl:text-[15px] font-light hover:bg-[#7A7A7A] hover:shadow-md transition-all duration-200">
+                                    Send
+                                </button>
                             </div>
                         </div>
                     </div>
                     <div>
-                        <img src={endPhoto} alt="" className='w-[30vw]' />
+                        <img
+                            src={endPhoto}
+                            alt="End Photo"
+                            className="w-full sm:w-[50vw] lg:w-[30vw] xl:w-[25vw] object-cover"
+                        />
                     </div>
                 </div>
             </div>
