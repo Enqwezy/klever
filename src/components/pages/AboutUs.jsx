@@ -7,7 +7,6 @@ import ab from '../../assets/img/fffff.avif';
 import ava from '../../assets/img/ava-develop.png';
 
 function AboutUs() {
-    // Варианты анимации
     const fadeInUp = {
         hidden: { opacity: 0, y: 50 },
         visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: 'easeOut' } },
@@ -28,12 +27,11 @@ function AboutUs() {
                     </div>
                 </div>
 
-                {/* Секция "Klever это..." с анимацией */}
                 <motion.div
                     className="w-[80vw] my-[5vh] 2xl:my-[20vh] flex justify-center"
                     initial="hidden"
                     whileInView="visible"
-                    viewport={{ once: true, amount: 0.3 }} // Анимация срабатывает один раз, когда 30% элемента видно
+                    viewport={{ once: true, amount: 0.3 }} 
                     variants={fadeInUp}
                 >
                     <div className="flex flex-col-reverse sm:flex-row items-center md:gap-5 2xl:gap-10">

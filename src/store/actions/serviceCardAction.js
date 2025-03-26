@@ -1,130 +1,113 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
-import { getServiceByID } from '../services/serviceCardService'
 
 export const fetchServiceByID = createAsyncThunk(
 	'service/byId',
 	async (id, { rejectWithValue }) => {
 		try {
-			const data = await getServiceByID(id)
-			console.log('Service by ID response:', data)
-			return data
+			const mockData = {
+				id,
+				title: `Услуга ${id}`,
+				price: 5000,
+				rating: 4.5,
+				description: 'Пример описания услуги',
+			}
+			return mockData
 		} catch (error) {
-			const errorMessage =
-				error.response?.data?.detail || 'Ошибка получения данных услуги'
+			const errorMessage = error.message || 'Ошибка получения данных услуги'
 			return rejectWithValue(errorMessage)
 		}
 	}
 )
-
 
 export const setRegions = createAsyncThunk(
-	'service/byId',
-	async (id, { rejectWithValue }) => {
+	'filter/setRegions',
+	async (regions, { rejectWithValue }) => {
 		try {
-			const data = await getServiceByID(id)
-			console.log('Service by ID response:', data)
-			return data
+			return regions
 		} catch (error) {
-			const errorMessage =
-				error.response?.data?.detail || 'Ошибка получения данных услуги'
+			const errorMessage = error.message || 'Ошибка установки регионов'
 			return rejectWithValue(errorMessage)
 		}
 	}
 )
-
 
 export const setSubcategories = createAsyncThunk(
-	'service/byId',
-	async (id, { rejectWithValue }) => {
+	'filter/setSubcategories',
+	async (subcategories, { rejectWithValue }) => {
 		try {
-			const data = await getServiceByID(id)
-			console.log('Service by ID response:', data)
-			return data
+			return subcategories
 		} catch (error) {
-			const errorMessage =
-				error.response?.data?.detail || 'Ошибка получения данных услуги'
+			const errorMessage = error.message || 'Ошибка установки подкатегорий'
 			return rejectWithValue(errorMessage)
 		}
 	}
 )
-
 
 export const setPriceRange = createAsyncThunk(
-	'service/byId',
-	async (id, { rejectWithValue }) => {
+	'filter/setPriceRange',
+	async ({ min, max }, { rejectWithValue }) => {
 		try {
-			const data = await getServiceByID(id)
-			console.log('Service by ID response:', data)
-			return data
+			const priceRange = { min, max }
+			return priceRange
 		} catch (error) {
-			const errorMessage =
-				error.response?.data?.detail || 'Ошибка получения данных услуги'
+			const errorMessage = error.message || 'Ошибка установки диапазона цен'
 			return rejectWithValue(errorMessage)
 		}
 	}
 )
-
 
 export const setRatingRange = createAsyncThunk(
-	'service/byId',
-	async (id, { rejectWithValue }) => {
+	'filter/setRatingRange',
+	async ({ min, max }, { rejectWithValue }) => {
 		try {
-			const data = await getServiceByID(id)
-			console.log('Service by ID response:', data)
-			return data
+			const ratingRange = { min, max }
+			return ratingRange
 		} catch (error) {
 			const errorMessage =
-				error.response?.data?.detail || 'Ошибка получения данных услуги'
+				error.message || 'Ошибка установки диапазона рейтинга'
 			return rejectWithValue(errorMessage)
 		}
 	}
 )
-
 
 export const fetchSubcategories = createAsyncThunk(
-	'service/byId',
-	async (id, { rejectWithValue }) => {
+	'filter/fetchSubcategories',
+	async (_, { rejectWithValue }) => {
 		try {
-			const data = await getServiceByID(id)
-			console.log('Service by ID response:', data)
-			return data
+			const mockSubcategories = ['Маникюр', 'Педикюр', 'Массаж', 'Стрижка']
+			return mockSubcategories
 		} catch (error) {
-			const errorMessage =
-				error.response?.data?.detail || 'Ошибка получения данных услуги'
+			const errorMessage = error.message || 'Ошибка получения подкатегорий'
 			return rejectWithValue(errorMessage)
 		}
 	}
 )
-
 
 export const fetchRequests = createAsyncThunk(
-	'service/byId',
-	async (id, { rejectWithValue }) => {
+	'filter/fetchRequests',
+	async (filters, { rejectWithValue }) => {
 		try {
-			const data = await getServiceByID(id)
-			console.log('Service by ID response:', data)
-			return data
+			const mockRequests = [
+				{ id: 1, title: 'Маникюр', price: 5000, rating: 4.5 },
+				{ id: 2, title: 'Педикюр', price: 7000, rating: 4.8 },
+				{ id: 3, title: 'Массаж', price: 6000, rating: 4.2 },
+			]
+			return mockRequests
 		} catch (error) {
-			const errorMessage =
-				error.response?.data?.detail || 'Ошибка получения данных услуги'
+			const errorMessage = error.message || 'Ошибка получения запросов'
 			return rejectWithValue(errorMessage)
 		}
 	}
 )
-
 
 export const setSortOption = createAsyncThunk(
-	'service/byId',
-	async (id, { rejectWithValue }) => {
+	'filter/setSortOption',
+	async (sortOption, { rejectWithValue }) => {
 		try {
-			const data = await getServiceByID(id)
-			console.log('Service by ID response:', data)
-			return data
+			return sortOption
 		} catch (error) {
-			const errorMessage =
-				error.response?.data?.detail || 'Ошибка получения данных услуги'
+			const errorMessage = error.message || 'Ошибка установки сортировки'
 			return rejectWithValue(errorMessage)
 		}
 	}
 )
-

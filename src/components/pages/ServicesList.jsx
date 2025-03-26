@@ -14,11 +14,18 @@ import {
 
 function ServicesList() {
     const dispatch = useDispatch();
-    const { regions, subcategories, priceRange, ratingRange, requests, sortOption } = useSelector(
-        (state) => state
-    );
- 
-    
+    const {
+        regions = [],
+        subcategories = ['Маникюр', 'Педикюр', 'Массаж'], 
+        priceRange = { min: '', max: '' },
+        ratingRange = { min: '', max: '' },
+        requests = [
+            { id: 1, title: 'Маникюр', price: 5000, rating: 4.5 },
+            { id: 2, title: 'Педикюр', price: 7000, rating: 4.8 },
+        ], 
+        sortOption = 'по соответствию',
+    } = useSelector((state) => state || {});
+
     const [selectedRegions, setSelectedRegions] = useState([]);
     const [selectedSubcategories, setSelectedSubcategories] = useState([]);
     const [priceMin, setPriceMin] = useState('');
@@ -31,8 +38,8 @@ function ServicesList() {
     const sortOptions = ['по соответствию', 'популярные', 'с дешевых', 'с дорогих'];
 
     useEffect(() => {
-        dispatch(fetchSubcategories()); // Загружаем подкатегории при монтировании
-        dispatch(setRegions(regionsList)); // Устанавливаем города в Redux
+        dispatch(fetchSubcategories()); 
+        dispatch(setRegions(regionsList)); 
     }, [dispatch]);
 
     const handleCheckboxChange = (region) => {
@@ -52,10 +59,9 @@ function ServicesList() {
     };
 
     const handleSortOptionChange = (option) => {
-        setSortOption(option);
         dispatch(setSortOption(option));
         setShowSortOptions(false);
-        handleFind(); // Обновляем запрос с новой сортировкой
+        handleFind(); 
     };
 
     const handleFind = () => {
@@ -188,9 +194,13 @@ function ServicesList() {
                         </div>
                     </div>
                     <div>
-                        {requests.map((request) => (
-                            <RequestCard key={request.id} data={request} />
-                        ))}
+                        {requests.length > 0 ? (
+                            requests.map((request) => (
+                                <RequestCard key={request.id} data={request} />
+                            ))
+                        ) : (
+                            <div>Нет доступных запросов</div>
+                        )}
                     </div>
                 </div>
             </div>
