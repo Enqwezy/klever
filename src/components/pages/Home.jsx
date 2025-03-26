@@ -26,16 +26,24 @@ function Home() {
         setCurrentSlide((prev) => (prev === totalSlides - 1 ? 0 : prev + 1));
     };
 
+    const getVisibleSlides = () => {
+        if (window.innerWidth < 640) return 1; 
+        if (window.innerWidth < 1024) return 2; 
+        return 3; һ
+    };
+
+    const visibleSlides = getVisibleSlides();
+
     return (
         <div>
-            <div className="bg-[#1D217C] w-full h-[60vh] sm:h-[70vh] lg:h-[90vh]  px-4 sm:px-6 lg:px-12 xl:px-[100px] pt-6 lg:pt-[40px] relative">
+            <div className="bg-[#1D217C] w-full h-[60vh] sm:h-[70vh] lg:h-[90vh] px-4 sm:px-6 lg:px-12 xl:px-[100px] pt-6 lg:pt-[40px] relative">
                 <div className="flex flex-col w-full relative">
                     <Header />
                     <div className="flex flex-col lg:flex-row w-full items-center lg:items-start">
-                        <div className="flex flex-col gap-y-3 sm:gap-y-4 xl:gap-y-5 items-center mt-[10vh] sm:mt-[15vh] lg:mt-[10vh] xl:mt-[2ch] lg:ml-0 xl:ml-10  2xl:ml-[200px] text-[18px] sm:text-[22px] xl:text-[25px] ">
+                        <div className="flex flex-col gap-y-3 sm:gap-y-4 xl:gap-y-5 items-center mt-[7vh] sm:mt-[5vh] lg:mt-[2vh] xl:mt-[2ch] lg:ml-[100px] xl:ml-[200px] text-[18px] sm:text-[22px] xl:text-[25px]">
                             <Link
                                 to="/beauty"
-                                className="bg-white px-4 sm:px-6 xl:px-8 text-[#141414] font-eastman_regular rounded-[155x] sm:rounded-[20px]  flex justify-center w-[220px] sm:w-[250px] xl:w-[300px] 2xl:w-[350px] py-1 hover:bg-gray-100 transition-all duration-200"
+                                className="bg-white px-4 sm:px-6 xl:px-8 text-[#141414] font-eastman_regular rounded-[15px] sm:rounded-[20px] flex justify-center w-[270px] sm:w-[300px] md:w-[320px] lg:w-[300px] xl:w-[350px] py-1 hover:bg-gray-100 transition-all duration-200"
                             >
                                 Красота и здоровье
                             </Link>
@@ -64,18 +72,18 @@ function Home() {
                                 Мед Услуги
                             </Link>
                         </div>
-                        <div className="absolute right-0 top-10 2xl:top-[150px] hidden lg:block">
-                            <img src={klever} alt="Klever" className="w-[50vw] lg:w-[40vw] xl:w-[35vw]" />
+                        <div className="absolute right-0 top-10 lg:top-[120px] xl:top-[120px] 2xl:top-[150px] hidden lg:block">
+                            <img src={klever} alt="Klever" className="w-[35vw]" />
                         </div>
                     </div>
                 </div>
             </div>
-            <div className="flex flex-col mt-[15vh] sm:mt-[20vh] lg:mt-[30vh] mx-4 sm:mx-8 lg:mx-[10vw] xl:mx-[23.6vw] relative">
+            <div className="flex flex-col mt-[15vh] sm:mt-[20vh] lg:mt-[30vh] mx-4 sm:mx-8 lg:mx-[10vw] xl:mx-[23.6vw] relative ">
                 <div className="flex flex-col sm:flex-row items-center mb-3 sm:mb-5">
                     <div className="text-[20px] sm:text-[22px] xl:text-[25px] font-eastman_medium">
                         Популярные услуги
                     </div>
-                    <div className="flex flex-row gap-2 sm:gap-3 absolute right-0 mt-2 sm:mt-0">
+                    <div className="flex flex-row gap-2 sm:gap-3 absolute right-0 mt-2 sm:mt-0 ">
                         <button onClick={handlePrev}>
                             <svg
                                 className="w-[30px] h-[30px] sm:w-[35px] sm:h-[35px] xl:w-[40px] xl:h-[40px]"
@@ -106,13 +114,16 @@ function Home() {
                         </button>
                     </div>
                 </div>
-                <div className="flex flex-row gap-x-3 sm:gap-x-4 xl:gap-x-5 overflow-hidden">
+                <div className="overflow-hidden w-full ml-[20px] ">
                     <div
-                        className="grid grid-cols-3 gap-5 transition-transform duration-500"
-                        style={{ transform: `translateX(-${currentSlide * 100}%)` }}
+                        className="flex transition-transform duration-500 ease-in-out   "
+                        style={{ transform: `translateX(-${currentSlide * (100 / visibleSlides)}%)` }}
                     >
                         {services.map((service, index) => (
-                            <div key={index} className="min-w-full sm:min-w-[50%] lg:min-w-[33.33%]">
+                            <div
+                                key={index}
+                                className="min-w-[100%] sm:min-w-[50%] lg:min-w-[33.33%]  px-1 "
+                            >
                                 <ServicesCard
                                     photo={service.photo}
                                     name={service.name}
@@ -123,15 +134,15 @@ function Home() {
                     </div>
                 </div>
             </div>
-            <div className="flex flex-col lg:flex-row mt-[10vh] sm:mt-[15vh] lg:mt-[20vh] px-4 sm:px-8 lg:px-12">
+            <div className="flex flex-col lg:flex-row mt-[10vh] sm:mt-[15vh] lg:mt-[20vh]  ">
                 <div className="flex flex-col lg:flex-row gap-4 sm:gap-5 xl:gap-10 w-full">
                     <img
                         src={someClever}
                         alt="Some Clever"
                         className="w-full sm:w-[50vw] lg:w-[40vw] xl:w-[35vw] object-cover"
                     />
-                    <div className="flex flex-col mt-6 lg:mt-[20vh]">
-                        <div className="text-[20px] sm:text-[22px] xl:text-[25px] font-eastman_medium text-center">
+                    <div className="flex flex-col mt-6 lg:mt-[20vh] px-4 sm:px-8 lg:px-12">
+                        <div className="text-[20px] sm:text-[22px] xl:text-[25px] font-eastman_medium text-center ">
                             О нас
                         </div>
                         <div className="text-[13px] sm:text-[14px] xl:text-[15px] font-eastman_regular w-full sm:w-[50vw] lg:w-[40vw] mt-4 sm:mt-6 xl:mt-[5vh] leading-relaxed">
@@ -140,7 +151,7 @@ function Home() {
                     </div>
                 </div>
             </div>
-            <div className="mb-6 sm:mb-8 xl:mb-10 px-4 sm:px-8 lg:px-12">
+            <div className="my-6 sm:mb-8 xl:mb-10 px-4 sm:px-8 lg:px-12">
                 <div className="text-[24px] sm:text-[30px] xl:text-[35px] flex justify-center font-eastman_medium">
                     Хочешь стать специалистом в Klever?
                 </div>
