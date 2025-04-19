@@ -19,11 +19,12 @@ class User(Base):
     favourites = relationship("Favourite", back_populates="user")
 
 
+"""Услуги"""
 class Category(Base):
     __tablename__ = "categories"
 
     id = Column(Integer, primary_key=True, index=True)
-    category_name = Column(String, default="", nullable=True)
+    category_name = Column(String(100), default="", nullable=False, index=True)
     created_at = Column(DateTime(timezone=True), default=func.now(), nullable=False)
 
     variants = relationship("Variant", back_populates="category")
@@ -33,7 +34,7 @@ class Variant(Base):
     __tablename__ = "variants"
 
     id = Column(Integer, primary_key=True, index=True)
-    name = Column(String, default="", nullable=True)
+    name = Column(String(100), default="", nullable=False, index=True)
     category_id = Column(Integer, ForeignKey("categories.id"), nullable=False)
 
     category = relationship("Category", back_populates="variants")
@@ -44,19 +45,20 @@ class City(Base):
     __tablename__ = "cities"
 
     id = Column(Integer, primary_key=True, index=True)
-    name = Column(String, default="", nullable=True)
+    name = Column(String(100), default="", nullable=False, index=True)
     created_at = Column(DateTime(timezone=True), default=func.now(), nullable=False)
 
     services = relationship("Service", back_populates="city")
+    restaurants = relationship("Restaurant", back_populates="city")  
 
 
 class Specialist(Base):
     __tablename__ = "specialists"
 
     id = Column(Integer, primary_key=True, index=True)
-    fullname = Column(String, default="", nullable=True)
+    fullname = Column(String(100), default="", nullable=False, index=True)
     phone_number = Column(String(20), nullable=True)
-    email = Column(String, default="", nullable=True)
+    email = Column(String(100), default="", nullable=True, index=True)
     photo = Column(Text, nullable=True)
     instagram_link = Column(Text, nullable=True)
     whatsapp_link = Column(Text, nullable=True)
@@ -69,7 +71,7 @@ class Service(Base):
     __tablename__ = "services"
 
     id = Column(Integer, primary_key=True, index=True)
-    name = Column(String, default="", nullable=True)
+    name = Column(String(100), default="", nullable=False, index=True)
     description = Column(Text, default="", nullable=True)
     price = Column(DECIMAL(10, 2), nullable=True)
     photo = Column(Text, nullable=True)
@@ -77,7 +79,6 @@ class Service(Base):
     created_at = Column(DateTime(timezone=True), default=func.now(), nullable=False)
     search_rank = Column(Float, default=0, nullable=True)
     search_vector = Column(TSVECTOR, nullable=True)
-
 
     city_id = Column(Integer, ForeignKey("cities.id"), nullable=False)
     variant_id = Column(Integer, ForeignKey("variants.id"), nullable=False)
@@ -93,15 +94,17 @@ class Service(Base):
 class Review(Base):
     __tablename__ = "reviews"
 
-    id = Column(Integer, primary_key=True, index=True, autoincrement=True,)
+    id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     description = Column(Text, default="", nullable=True)
     created_at = Column(DateTime(timezone=True), default=func.now(), nullable=False)
 
-    service_id = Column(Integer, ForeignKey("services.id"), nullable=False)
+    service_id = Column(Integer, ForeignKey("services.id"), nullable=True)
     user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
+    restaurant_id = Column(Integer, ForeignKey("restaurants.id"), nullable=True)
 
     service = relationship("Service", back_populates="reviews")
     user = relationship("User", back_populates="reviews")
+    restaurant = relationship("Restaurant", back_populates="reviews")
 
 
 class Favourite(Base):
@@ -111,7 +114,70 @@ class Favourite(Base):
     created_at = Column(DateTime(timezone=True), default=func.now(), nullable=False)
 
     user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
-    service_id = Column(Integer, ForeignKey("services.id"), nullable=False)
+    service_id = Column(Integer, ForeignKey("services.id"), nullable=True)
+    restaurant_id = Column(Integer, ForeignKey("restaurants.id"), nullable=True)
 
     user = relationship("User", back_populates="favourites")
     service = relationship("Service", back_populates="favourites")
+    restaurant = relationship("Restaurant", back_populates="favourites")
+
+
+"""Рестораны"""
+class CategoryRestaurant(Base):
+    __tablename__ = "category_restaurants"
+
+    id = Column(Integer, primary_key=True, index=True)
+    category_name = Column(String(100), default="", nullable=False, index=True)
+    created_at = Column(DateTime(timezone=True), default=func.now(), nullable=False)
+
+    variant_restaurants = relationship("VariantRestaurant", back_populates="category_restaurant")
+
+
+class VariantRestaurant(Base):
+    __tablename__ = "variant_restaurants"
+
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String(100), default="", nullable=False, index=True)
+    category_restaurant_id = Column(Integer, ForeignKey("category_restaurants.id"), nullable=False)
+
+    category_restaurant = relationship("CategoryRestaurant", back_populates="variant_restaurants")
+    restaurants = relationship("Restaurant", back_populates="variant_restaurant")  
+
+
+class RestaurantAdmin(Base):
+    __tablename__ = "restaurant_admins"
+
+    id = Column(Integer, primary_key=True, index=True)
+    fullname = Column(String(100), default="", nullable=False, index=True)
+    phone_number = Column(String(20), nullable=True)
+    email = Column(String(100), default="", nullable=True, index=True)
+    photo = Column(Text, nullable=True)
+    instagram_link = Column(Text, nullable=True)
+    whatsapp_link = Column(Text, nullable=True)
+    created_at = Column(DateTime(timezone=True), default=func.now(), nullable=False)
+
+    restaurants = relationship("Restaurant", back_populates="restaurant_admin")
+
+
+class Restaurant(Base):
+    __tablename__ = "restaurants"
+
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String(100), default="", nullable=False, index=True)
+    description = Column(Text, default="", nullable=True)
+    price = Column(DECIMAL(10, 2), nullable=True)
+    photo = Column(Text, nullable=True)
+    rating = Column(Float, nullable=True)
+    created_at = Column(DateTime(timezone=True), default=func.now(), nullable=False)
+    search_rank = Column(Float, default=0, nullable=True)
+    search_vector = Column(TSVECTOR, nullable=True)
+
+    city_id = Column(Integer, ForeignKey("cities.id"), nullable=False)
+    variant_restaurant_id = Column(Integer, ForeignKey("variant_restaurants.id"), nullable=False)
+    restaurant_admin_id = Column(Integer, ForeignKey("restaurant_admins.id"), nullable=False)  
+
+    city = relationship("City", back_populates="restaurants")
+    variant_restaurant = relationship("VariantRestaurant", back_populates="restaurants")
+    restaurant_admin = relationship("RestaurantAdmin", back_populates="restaurants")
+    reviews = relationship("Review", back_populates="restaurant")  
+    favourites = relationship("Favourite", back_populates="restaurant")  
