@@ -100,11 +100,9 @@ class Review(Base):
 
     service_id = Column(Integer, ForeignKey("services.id"), nullable=True)
     user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
-    restaurant_id = Column(Integer, ForeignKey("restaurants.id"), nullable=True)
 
     service = relationship("Service", back_populates="reviews")
     user = relationship("User", back_populates="reviews")
-    restaurant = relationship("Restaurant", back_populates="reviews")
 
 
 class Favourite(Base):
@@ -115,11 +113,9 @@ class Favourite(Base):
 
     user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
     service_id = Column(Integer, ForeignKey("services.id"), nullable=True)
-    restaurant_id = Column(Integer, ForeignKey("restaurants.id"), nullable=True)
 
     user = relationship("User", back_populates="favourites")
     service = relationship("Service", back_populates="favourites")
-    restaurant = relationship("Restaurant", back_populates="favourites")
 
 
 """Рестораны"""
@@ -179,5 +175,3 @@ class Restaurant(Base):
     city = relationship("City", back_populates="restaurants")
     variant_restaurant = relationship("VariantRestaurant", back_populates="restaurants")
     restaurant_admin = relationship("RestaurantAdmin", back_populates="restaurants")
-    reviews = relationship("Review", back_populates="restaurant")  
-    favourites = relationship("Favourite", back_populates="restaurant")  
