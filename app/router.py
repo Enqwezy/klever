@@ -15,6 +15,7 @@ from app.api.g4f.tutor import router as tutor_router
 
 from app.api.category_restaurant.category_restaurant import router as category_restaurant_router
 from app.api.variant_restaurant.variant_restaurant import router as variant_restaurant_router
+from app.api.restaurant.restaurant import router as restourant_router
 
 
 route = APIRouter()
@@ -39,3 +40,4 @@ route.include_router(tutor_router, prefix="", tags=["Tutor"])
 """Рестораны"""
 route.include_router(category_restaurant_router, prefix="/restaurants", tags=["Category-Restaurant"])
 route.include_router(variant_restaurant_router, prefix="/restaurants", tags=["Variant-Restaurant"])
+route.include_router(restourant_router, prefix="/restourants", tags=["Restourant"])
