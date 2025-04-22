@@ -1,5 +1,6 @@
 from fastapi import APIRouter
 from app.api.auth.auth import router as auth_user_router
+from app.api.user.user import router as user_router
 
 from app.api.category.category import router as category_router
 from app.api.city.city import router as city_router
@@ -22,6 +23,9 @@ route = APIRouter()
 
 """Аутентификация"""
 route.include_router(auth_user_router, prefix="", tags=["UserAuthentication"])
+
+"""User"""
+route.include_router(user_router, prefix="/user", tags=["User"])
 
 """Услуги"""
 route.include_router(category_router, prefix="", tags=["Category"])
