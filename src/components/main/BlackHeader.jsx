@@ -4,6 +4,8 @@ import logoMini from '../../assets/img/logo-mini-black.png'
 
 
 function BlackHeader() {
+    const accessToken = localStorage.getItem('access_token');
+    const isAuthenticated = !!accessToken;
     return (
         <div className='flex justify-center mt-5'>
 
@@ -42,14 +44,23 @@ function BlackHeader() {
                         </select>
                     </div>
 
-                    <Link to={'/login'} className='flex flex-row text-black 2xl:text-[1.3vw]'>
-                        <button className='flex flex-row gap-2'>
+                    <Link
+                        to={isAuthenticated ? '/profile' : '/login'}
+                        className="flex flex-row text-black 2xl:text-[1.3vw]"
+                    >
+                        <button className="flex flex-row gap-2">
+                            <div>{isAuthenticated ? 'Профиль' : 'Вход'}</div>
                             <div>
-                                Вход
-                            </div>
-                            <div>
-                                <svg className='w-[25px] h-[27px] 2xl:size-[30px]' viewBox="0 0 25 27" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M12.5439 13.3799C15.752 13.3799 18.1982 10.6406 18.1982 7.06641C18.1982 3.72656 15.6934 0.884766 12.5439 0.884766C9.37988 0.884766 6.8457 3.72656 6.875 7.06641C6.875 10.6406 9.32129 13.3799 12.5439 13.3799ZM2.53906 26.5488H22.4609C23.8232 26.5488 24.6289 26.1387 24.6289 24.8789C24.6289 21.1582 19.9854 16.0166 12.5 16.0166C5.0293 16.0166 0.371094 21.1582 0.371094 24.8789C0.371094 26.1387 1.17676 26.5488 2.53906 26.5488Z" fill="black" />
+                                <svg
+                                    className="w-[25px] h-[27px] 2xl:size-[30px]"
+                                    viewBox="0 0 25 27"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
+                                    <path
+                                        d="M12.5439 13.3799C15.752 13.3799 18.1982 10.6406 18.1982 7.06641C18.1982 3.72656 15.6934 0.884766 12.5439 0.884766C9.37988 0.884766 6.8457 3.72656 6.875 7.06641C6.875 10.6406 9.32129 13.3799 12.5439 13.3799ZM2.53906 26.5488H22.4609C23.8232 26.5488 24.6289 26.1387 24.6289 24.8789C24.6289 21.1582 19.9854 16.0166 12.5 16.0166C5.0293 16.0166 0.371094 21.1582 0.371094 24.8789C0.371094 26.1387 1.17676 26.5488 2.53906 26.5488Z"
+                                        fill="black"
+                                    />
                                 </svg>
                             </div>
                         </button>

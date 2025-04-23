@@ -3,12 +3,11 @@ import { serviceProfile } from '../actions/serviceProfileActions'
 
 const initialState = {
 	serviceProfileData: [
-        {
-            id: 1,
-            nameService: 'wrfrf',
-            
-        }
-    ],
+		{
+			id: 1,
+			nameService: 'wrfrf',
+		},
+	],
 	loading: false,
 	error: null,
 }
@@ -16,14 +15,13 @@ const initialState = {
 const serviceProfileSlice = createSlice({
 	name: 'serviceProfile',
 	initialState,
-	reducers: {
-	},
+	reducers: {},
 	extraReducers: builder => {
 		builder
 			.addCase(serviceProfile.pending, state => {
 				state.loading = true
 				state.error = null
-				state.serviceProfileData = null 
+				state.serviceProfileData = null
 			})
 			.addCase(serviceProfile.fulfilled, (state, action) => {
 				state.loading = false
@@ -38,5 +36,5 @@ const serviceProfileSlice = createSlice({
 	},
 })
 
-export const { resetVerifyState } = serviceProfileSlice.actions 
-export default serviceProfileSlice.reducer 
+export const { resetVerifyState } = serviceProfileSlice.actions
+export default serviceProfileSlice.reducer

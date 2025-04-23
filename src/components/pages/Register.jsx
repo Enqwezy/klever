@@ -1,12 +1,42 @@
-import React from 'react';
+import React, { useState } from 'react';
 import logo from '../../assets/img/logo.png';
 import RegularInputs from '../UI/input/RegularInputs';
-import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { register } from '../../store/actions/authAction';
+import { Link, useNavigate } from 'react-router-dom'; // Добавляем useNavigate
 
 function Register() {
+    const dispatch = useDispatch();
+    const navigate = useNavigate(); // Хук для перенаправления
+
+    const [formData, setFormData] = useState({
+        name: '',
+        phone: '',
+        email: '',
+        password: '',
+        address: '',
+    });
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData((prev) => ({ ...prev, [name]: value }));
+    };
+
+    const handleRegister = async (e) => {
+        e.preventDefault();
+        try {
+            // Предполагаем, что register возвращает промис
+            await dispatch(register(formData));
+            // Если регистрация успешна, перенаправляем на главную страницу
+            navigate('/');
+        } catch (error) {
+            console.error('Ошибка регистрации:', error);
+            // Здесь можно добавить обработку ошибки, например, показать уведомление
+        }
+    };
+
     return (
         <div className="w-full min-h-screen bg-[#76C6FF] flex flex-col-reverse md:flex-row-reverse justify-center items-center gap-4 md:gap-8 lg:gap-[5vw] p-4">
-            
             <div className="hidden md:block">
                 <img
                     src={logo}
@@ -14,63 +44,75 @@ function Register() {
                     className="max-w-[50vw] sm:max-w-[40vw] md:max-w-[30vw] lg:max-w-[20vw] xl:max-w-[19vw] 2xl:max-w-[20vw]"
                 />
             </div>
-            <div className="w-full max-w-[90vw] sm:max-w-[70vw] md:max-w-[50vw] lg:max-w-[40vw] xl:max-w-[400px] 2xl:max-w-[450px]">
+
+            <form
+                onSubmit={handleRegister}
+                className="w-full max-w-[90vw] sm:max-w-[70vw] md:max-w-[50vw] lg:max-w-[40vw] xl:max-w-[400px] 2xl:max-w-[450px]"
+            >
                 <div className="rounded-[20px] sm:rounded-[30px] xl:rounded-[40px] min-h-[60vh] sm:min-h-[70vh] xl:min-h-[80vh] bg-white p-4 sm:p-6 xl:p-[25px] flex justify-center flex-col shadow-container gap-4 sm:gap-5 xl:gap-6">
                     <div className="font-eastman_medium text-[20px] sm:text-[25px] xl:text-[30px] text-[#0A0A0A] text-center leading-tight sm:leading-8">
                         Create an account
                     </div>
 
-                    <div className="flex flex-col gap-y-4 sm:gap-y-5 xl:gap-y-[20px]">
-                        <div className="font-eastman_regular">
-                            <RegularInputs
-                                name="Name"
-                                placeholder="Enter message"
-                                type="text"
-                                borderColor="border-[#6A6A6A]"
-                            />
-                        </div>
-                        <div className="font-eastman_regular">
-                            <RegularInputs
-                                name="Phone"
-                                placeholder="Enter message"
-                                type="tel"
-                                borderColor="border-[#6A6A6A]"
-                            />
-                        </div>
-                        <div className="font-eastman_regular">
-                            <RegularInputs
-                                name="e-mail"
-                                placeholder="Enter message"
-                                type="email"
-                                borderColor="border-[#6A6A6A]"
-                            />
-                        </div>
-                        <div className="font-eastman_regular">
-                            <RegularInputs
-                                name="Password"
-                                placeholder="Enter message"
-                                type="password"
-                                borderColor="border-[#6A6A6A]"
-                            />
-                        </div>
-                        <div className="font-eastman_regular">
-                            <RegularInputs
-                                name="Address"
-                                placeholder="Enter message"
-                                type="text"
-                                borderColor="border-[#6A6A6A]"
-                            />
-                        </div>
+                    <div className="flex flex-col gap-y-4 sm:gap-y-5 xl:gap-y-[20px] font-eastman_regular">
+                        <RegularInputs
+                            name="name"
+                            placeholder="Your name"
+                            type="text"
+                            borderColor="border-[#6A6A6A]"
+                            value={formData.name}
+                            onChange={handleChange}
+                        />
+                        <RegularInputs
+                            name="phone"
+                            placeholder="Your phone"
+                            type="tel"
+                            borderColor="border-[#6A6A6A]"
+                            value={formData.phone}
+                            onChange={handleChange}
+                        />
+                        <RegularInputs
+                            name="email"
+                            placeholder="Your email"
+                            type="email"
+                            borderColor="border-[#6A6A6A]"
+                            value={formData.email}
+                            onChange={handleChange}
+                        />
+                        <RegularInputs
+                            name="password"
+                            placeholder="Your password"
+                            type="password"
+                            borderColor="border-[#6A6A6A]"
+                            value={formData.password}
+                            onChange={handleChange}
+                        />
+                        <RegularInputs
+                            name="address"
+                            placeholder="Your address"
+                            type="text"
+                            borderColor="border-[#6A6A6A]"
+                            value={formData.address}
+                            onChange={handleChange}
+                        />
                     </div>
 
                     <div className="flex flex-col gap-3 sm:gap-4 xl:gap-[15px] text-[13px] sm:text-[14px] xl:text-[17px] 2xl:text-[20px]">
                         <div className="flex justify-center items-center mt-4 sm:mt-6 xl:mt-[30px]">
-                            <button className="bg-[#6A6A6A] rounded-[12px] w-[90px] sm:w-[100px] xl:w-[120px] p-2 flex justify-center items-center h-[28px] sm:h-[31px] xl:h-[35px] text-white font-light hover:bg-[#7A7A7A] hover:shadow-md transition-all duration-200">
+                            <button
+                                type="submit"
+                                className="bg-[#6A6A6A] rounded-[12px] w-[90px] sm:w-[100px] xl:w-[120px] p-2 flex justify-center items-center h-[28px] sm:h-[31px] xl:h-[35px] text-white font-light hover:bg-[#7A7A7A] hover:shadow-md transition-all duration-200"
+                            >
                                 Register
                             </button>
                         </div>
+
+                        {/* Social Buttons */}
                         <div className="flex justify-center items-center">
-                            <button className="flex flex-row gap-x-4 sm:gap-x-6 xl:gap-x-[30px] pl-2 sm:pl-3 bg-[#7583CA] rounded-[12px] sm:rounded-[15px] p-1 sm:p-2 w-[180px] sm:w-[200px] xl:w-[240px] 2xl:w-[270px] h-[28px] sm:h-[32px] xl:h-[35px] items-center font-thin text-[#FFFFFFBF] hover:bg-[#8593DA] hover:shadow-lg transition-all duration-200">
+                            <button
+                                type="button"
+                                className="flex flex-row gap-x-4 sm:gap-x-6 xl:gap-x-[30px] pl-2 sm:pl-3 bg-[#7583CA] rounded-[12px] sm:rounded-[15px] p-1 sm:p-2 w-[180px] sm:w-[200px] xl:w-[240px] 2xl:w-[270px] h-[28px] sm:h-[32px] xl:h-[35px] items-center font-thin text-[#FFFFFFBF] hover:bg-[#8593DA] hover:shadow-lg transition-all duration-200"
+                            >
                                 <svg
                                     width="12"
                                     height="18"
@@ -88,8 +130,12 @@ function Register() {
                                 Continue with Facebook
                             </button>
                         </div>
+
                         <div className="flex justify-center items-center">
-                            <button className="flex flex-row gap-x-4 sm:gap-x-6 xl:gap-x-[30px] pl-2 border-[1px] border-[#232323BF] rounded-[12px] sm:rounded-[15px] p-1 sm:p-2 w-[180px] sm:w-[200px] xl:w-[220px] 2xl:w-[250px] h-[28px] sm:h-[32px] xl:h-[35px] items-center font-thin text-[#232323BF] hover:border-[#232323] hover:shadow-md hover:bg-gray-50 transition-all duration-200">
+                            <button
+                                type="button"
+                                className="flex flex-row gap-x-4 sm:gap-x-6 xl:gap-x-[30px] pl-2 border-[1px] border-[#232323BF] rounded-[12px] sm:rounded-[15px] p-1 sm:p-2 w-[180px] sm:w-[200px] xl:w-[220px] 2xl:w-[250px] h-[28px] sm:h-[32px] xl:h-[35px] items-center font-thin text-[#232323BF] hover:border-[#232323] hover:shadow-md hover:bg-gray-50 transition-all duration-200"
+                            >
                                 <svg
                                     width="16"
                                     height="16"
@@ -107,36 +153,18 @@ function Register() {
                                 Continue with Google
                             </button>
                         </div>
+
                         <div className="flex justify-center items-center mt-3 sm:mt-4 xl:mt-[15px] text-[12px] sm:text-[14px] xl:text-[17px]">
                             <p className="text-[#0A0A0A] font-eastman_regular">
                                 Do you have an account?{' '}
                                 <Link to="/login" className="text-blue-600 hover:underline">
-                                    Login
+                                    Sign in
                                 </Link>
                             </p>
                         </div>
                     </div>
                 </div>
-            </div>
-
-            <div className="block md:hidden mt-2">
-                <img
-                    src={logo}
-                    alt="Logo"
-                    className="max-w-[50vw] sm:max-w-[40vw] md:max-w-[30vw] lg:max-w-[20vw] xl:max-w-[15vw] 2xl:max-w-[20vw]"
-                />
-            </div>
-            <div className='md:absolute top-9 2xl:left-9 md:left-[8vw] lg:left-9'>
-                <Link to={'/'} className='flex flex-row bg-white text-black gap-3 xl:text-[15px] 2xl:text-[20px] rounded-xl p-2 font-eastman_regular justify-center items-center'>
-                    <div className='xl:min-w-[23px] xl:min-h-[23px] 2xl:min-w-[30px] 2xl:min-h-[30px]'>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
-                        </svg>
-
-                    </div>
-                    <div>На главную</div>
-                </Link>
-            </div>
+            </form>
         </div>
     );
 }

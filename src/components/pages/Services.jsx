@@ -125,7 +125,7 @@ function Services() {
                 <div className='font-eastman_regular text-[7vw] sm:text-[5vw] md:text-[4vw] lg:text-[3.5vw] xl:text-[2vw] 2xl:text-[2.5vw]'>
                     Новые заявки
                 </div>
-                <div>
+                <div className='xl:grid xl:grid-cols-2 gap-3 '>
                     {request.map((request)=>
                     <RequestCard data={request}/>
                     )}

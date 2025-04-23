@@ -36,7 +36,7 @@ function Home() {
 
     return (
         <div>
-            <div className="bg-[#1D217C] w-full h-[60vh] sm:h-[70vh] lg:h-[90vh] px-4 sm:px-6 lg:px-12 xl:px-[100px] pt-6 lg:pt-[40px] relative">
+            <div className="bg-[#1D217C] w-full h-[60vh] sm:h-[70vh] lg:h-[90vh] px-4 sm:px-6 lg:px-12 xl:px-[100px] pt-6 relative">
                 <div className="flex flex-col w-full relative">
                     <Header />
                     <div className="flex flex-col lg:flex-row w-full items-center lg:items-start">
