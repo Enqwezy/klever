@@ -1,23 +1,21 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
+import { getRequestByID } from '../services/requestCardService'
 
-export const fetchServiceByID = createAsyncThunk(
-	'service/byId',
-	async (id, { rejectWithValue }) => {
+export const fetchRequestByID = createAsyncThunk(
+	'request/byId',
+	async (category_id, { rejectWithValue }) => {
 		try {
-			const mockData = {
-				id,
-				title: `Услуга ${id}`,
-				price: 5000,
-				rating: 4.5,
-				description: 'Пример описания услуги',
-			}
-			return mockData
+			const response = await getRequestByID(category_id)
+			return response.data || {}
 		} catch (error) {
 			const errorMessage = error.message || 'Ошибка получения данных услуги'
 			return rejectWithValue(errorMessage)
 		}
 	}
 )
+
+
+
 
 export const setRegions = createAsyncThunk(
 	'filter/setRegions',

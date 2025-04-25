@@ -10,7 +10,7 @@ import {
     fetchSubcategories,
     fetchRequests,
     setSortOption,
-} from '../../store/actions/serviceCardAction';
+} from '../../store/actions/requestCardAction';
 
 function ServicesList({ service_name }) {
     const dispatch = useDispatch();
@@ -81,7 +81,7 @@ function ServicesList({ service_name }) {
         <div>
             <BlackHeader />
             <div className="flex justify-center items-center flex-col">
-                <div className="font-eastman_regular 2xl:text-[3vw]">Красота и здоровье</div>
+                <div className="font-eastman_regular 2xl:text-[3vw]">{service_name === 'beauty' ? 'Красота и здоровье' : service_name === 'cleaning' ? 'Клининг' : service_name === 'tutoring' ? 'Репетиторство' : service_name === 'building' ? 'Строительство' : service_name === 'med_service' ? 'Медицинские услуги' : ''}</div>
                 <div className="flex flex-row gap-5 w-[80vw] border">
                     <div className="max-w-[30vw] flex flex-col gap-5">
                         <div>
