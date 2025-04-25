@@ -1,7 +1,7 @@
 import API from './api'
 
 export const getUserProfile = async (token) => {
-    const response = await API.get(`/v1/user/profile`, {
+    const response = await API.get(`/v1/user/get-user`, {
         headers: {
             Authorization: `Bearer ${token}`
         }
@@ -27,7 +27,7 @@ export const updateUserProfile = async (token, data) => {
 }
 
 export const getUserFavorites = async (token) => {
-    const response = await API.get(`/v1/user/favorites`, {
+    const response = await API.get(`/v1/favourites`, {
         headers: {
             Authorization: `Bearer ${token}`
         }
@@ -40,7 +40,7 @@ export const getUserFavorites = async (token) => {
 }
 
 export const addUserFavorite = async (token, data) => {
-    const response = await API.post(`/v1/user/favorites`, data, {
+    const response = await API.post(`/v1/add-favourites`, data, {
         headers: {
             Authorization: `Bearer ${token}`
         }
@@ -53,7 +53,7 @@ export const addUserFavorite = async (token, data) => {
 }
 
 export const deleteUserFavorite = async (token, id) => {
-    const response = await API.delete(`/v1/user/favorites/${id}`, {
+    const response = await API.delete(`/v1/favourites/${id}`, {
         headers: {
             Authorization: `Bearer ${token}`
         }

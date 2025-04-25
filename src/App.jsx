@@ -16,11 +16,36 @@ function App() {
         <Route path="/" element={<Home/>} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/beauty" element={<Services />} />
-        <Route path="/beauty/all" element={<ServicesList />} />
-        <Route path="/beauty/one" element={<ServicePage />} />
         <Route path="/about" element={<AboutUs />} />
         <Route path="/profile" element={<Profile />} />
+
+        {/* красота */}
+        <Route path="/beauty" element={<Services service_name="beauty" />} />
+        <Route path="/beauty/all" element={<ServicesList service_name="beauty" />} />
+        <Route path="/beauty/one" element={<ServicePage />} />
+
+        {/* клининг */}
+        <Route path="/cleaning" element={<Services service_name="cleaning" />} />
+        <Route path="/cleaning/all" element={<ServicesList service_name="cleaning" />} />
+        <Route path="/cleaning/one" element={<ServicePage />} />
+
+        {/* tutoring */}
+        <Route path="/tutoring" element={<Services service_name="tutoring" />} />
+        <Route path="/tutoring/all" element={<ServicesList service_name="tutoring" />} />
+        <Route path="/tutoring/one" element={<ServicePage />} />
+
+        {/* строительство */}
+        <Route path="/building" element={<Services service_name="building" />} />
+        <Route path="/building/all" element={<ServicesList service_name="building" />} />
+        <Route path="/building/one" element={<ServicePage  />} />
+
+        {/* медицина */}
+        <Route path="/med_service" element={<Services service_name="med_service" />} />
+        <Route path="/med_service/all" element={<ServicesList service_name="med_service" />} />
+        <Route path="/med_service/one" element={<ServicePage />} />
+
+
+
 
       </Routes> 
     </div>

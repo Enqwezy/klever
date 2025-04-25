@@ -1,11 +1,11 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
-import { getServiceList } from '../services/servicesListService'
+import { getServiceListById } from '../services/servicesListService'
 
 export const serviceList = createAsyncThunk(
 	'service/list',
-	async (_, { rejectWithValue }) => {
+	async (category_id, { rejectWithValue }) => {
 		try {
-			const data = await getServiceList()
+			const data = await getServiceListById(category_id)
 			console.log('Service list response:', data)
 			return data
 		} catch (error) {

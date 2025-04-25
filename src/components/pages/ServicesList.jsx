@@ -12,7 +12,7 @@ import {
     setSortOption,
 } from '../../store/actions/serviceCardAction';
 
-function ServicesList() {
+function ServicesList({ service_name }) {
     const dispatch = useDispatch();
     const {
         regions = [],

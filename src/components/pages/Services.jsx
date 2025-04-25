@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import BlackHeader from '../main/BlackHeader'
 import cosmeticCard from '../../assets/img/cosmetic-card.png'
 import ServicesCard from '../UI/cards/ServicesCard'
@@ -6,49 +6,24 @@ import Footer from '../main/Footer'
 import RequestCard from '../UI/cards/RequestCard'
 import requestPhoto from '../../assets/img/request-card.png'
 import { Link } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
+import { getServiceListById } from '../../store/services/servicesListService'
 
-function Services() {
-    const data = [
-        {
-            id: 1,
-            photo: cosmeticCard,
-            name: 'Макияж и визаж',
-            description: 'wefwefwe'
-        },
-        {
-            id: 2,
-            photo: cosmeticCard,
-            name: 'Макияж и визаж',
-            description: 'wefwefwe'
-        },
-        {
-            id: 3,
-            photo: cosmeticCard,
-            name: 'Макияж и визаж',
-            description: 'wefwefwe'
-        },
-        {
-            id: 3,
-            photo: cosmeticCard,
-            name: 'Макияж и визаж',
-            description: 'wefwefwe'
-        }, {
-            id: 3,
-            photo: cosmeticCard,
-            name: 'Макияж и визаж',
-            description: 'wefwefwe'
-        }, {
-            id: 3,
-            photo: cosmeticCard,
-            name: 'Макияж и визаж',
-            description: 'wefwefwe'
-        }, {
-            id: 3,
-            photo: cosmeticCard,
-            name: 'Макияж и визаж',
-            description: 'wefwefwe'
-        },
-    ]
+function Services({service_name}) {
+    const dispatch = useDispatch()
+    const { serviceListData } = useSelector((state) => state.serviceList)
+    const categoryId = service_name === 'beauty' ? 1 : service_name === 'cleaning' ? 2 : service_name === 'tutoring' ? 3 : service_name === 'building' ? 4 : service_name === 'med_service' ? 5 : null
+
+    useEffect (() => {
+        const fetchData = async () => {
+            try {
+                await dispatch(getServiceListById(categoryId))
+            } catch (error) {
+                console.error('Error fetching service list:', error)
+            }
+        }
+        fetchData()
+    }, [])
 
     const request = [
         {
@@ -90,9 +65,9 @@ function Services() {
         <div className=''>
             <BlackHeader />
             <div className='px-[10vw] flex justify-center flex-col text-center mt-5 gap-y-[3vh] '>
-                <div className='font-eastman_regular text-[7vw] sm:text-[5vw] md:text-[4vw] lg:text-[3.5vw] xl:text-[2vw]'>Красота и здоровье</div>
+                <div className='font-eastman_regular text-[7vw] sm:text-[5vw] md:text-[4vw] lg:text-[3.5vw] xl:text-[2vw]'>{service_name === 'beauty' ? 'Красота и здоровье' : service_name === 'cleaning' ? 'Клининг' : service_name === 'tutoring' ? 'Репетиторство' : service_name === 'building' ? 'Строительство' : service_name === 'med_service' ? 'Медицинские услуги' : ''}</div>
                 <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 gap-5 '>
-                    <Link to={'/beauty/all'} className="relative w-full max-w-[320px] h-[250px] shadow-card bg-[#1D217C] cursor-pointer">
+                    <Link to={`/${service_name}/all`} className="relative w-full max-w-[320px] h-[250px] shadow-card bg-[#1D217C] cursor-pointer">
                         <div className="absolute bottom-0 w-full z-20">
                             <svg
                                 className="w-full h-[148px]"
@@ -115,7 +90,7 @@ function Services() {
                         </div>
                     </Link>
 
-                    {data.map((data) =>
+                    {serviceListData.map((data) =>
                         <ServicesCard name={data.name} description={data.description} photo={data.photo} />
                     )}
                 </div>
