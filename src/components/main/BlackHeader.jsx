@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import logoMini from '../../assets/img/logo-mini-black.png';
 
@@ -6,10 +6,79 @@ function BlackHeader() {
     const accessToken = localStorage.getItem('access_token');
     const isAuthenticated = !!accessToken;
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+    const [isSearchOpen, setIsSearchOpen] = useState(false);
+    const [searchQuery, setSearchQuery] = useState('');
+    const [searchResults, setSearchResults] = useState([]);
+    const [isSearching, setIsSearching] = useState(false);
     const navigate = useNavigate();
+    const searchRef = useRef(null);
+    const debounceTimeout = useRef(null);
+
+    // Функция имитации поиска (замените на реальный API-запрос)
+    const searchRequests = async (query) => {
+        // Пример: запрос к серверу
+        // const response = await fetch(`/api/search?q=${query}`);
+        // return response.json();
+
+        // Имитация результатов
+        return [
+            { id: 1, title: `Услуга ${query} 1` },
+            { id: 2, title: `Услуга ${query} 2` },
+            { id: 3, title: `Услуга ${query} 3` },
+        ];
+    };
+
+    // Обработка поиска с debounce
+    useEffect(() => {
+        if (searchQuery.trim() === '') {
+            setSearchResults([]);
+            setIsSearching(false);
+            return;
+        }
+
+        setIsSearching(true);
+        if (debounceTimeout.current) {
+            clearTimeout(debounceTimeout.current);
+        }
+
+        debounceTimeout.current = setTimeout(async () => {
+            try {
+                const results = await searchRequests(searchQuery);
+                setSearchResults(results);
+            } catch (error) {
+                console.error('Ошибка поиска:', error);
+                setSearchResults([]);
+            } finally {
+                setIsSearching(false);
+            }
+        }, 2000);
+
+        return () => clearTimeout(debounceTimeout.current);
+    }, [searchQuery]);
+
+    // Закрытие поиска при клике вне области
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (searchRef.current && !searchRef.current.contains(event.target)) {
+                setIsSearchOpen(false);
+                setSearchQuery('');
+                setSearchResults([]);
+            }
+        };
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, []);
 
     const toggleSidebar = () => {
         setIsSidebarOpen(!isSidebarOpen);
+    };
+
+    const toggleSearch = () => {
+        setIsSearchOpen(!isSearchOpen);
+        if (isSearchOpen) {
+            setSearchQuery('');
+            setSearchResults([]);
+        }
     };
 
     const handleLogout = () => {
@@ -20,7 +89,7 @@ function BlackHeader() {
 
     return (
         <div className="flex justify-center mt-5">
-            <div className="flex flex-row gap-10 w-[80vw] justify-between">
+            <div className="flex flex-row gap-10 w-[80vw] justify-between items-center">
                 <div className="flex flex-col gap-y-4">
                     <img src={logoMini} alt="" className="w-[80px] md:w-[100px] 2xl:w-[150px]" />
                     <div className="flex flex-col gap-y-[5px] cursor-pointer" onClick={toggleSidebar}>
@@ -36,12 +105,13 @@ function BlackHeader() {
                     </div>
                 </div>
                 <div className="flex flex-row gap-5 md:gap-6 lg:gap-7 xl:gap-10 2xl:items-center">
-                    <div>
+                    <div className="relative" ref={searchRef}>
                         <svg
-                            className="w-[40px] h-[40px] 2xl:w-[60px] 2xl:h-[60px]"
+                            className="w-[40px] h-[40px] 2xl:w-[60px] 2xl:h-[60px] cursor-pointer"
                             viewBox="0 0 57 57"
                             fill="none"
                             xmlns="http://www.w3.org/2000/svg"
+                            onClick={toggleSearch}
                         >
                             <circle cx="28.5" cy="28.5" r="28.5" fill="#F8F8F8" />
                             <path
@@ -49,6 +119,41 @@ function BlackHeader() {
                                 fill="#141414"
                             />
                         </svg>
+                        {isSearchOpen && (
+                            <div className="absolute top-0 left-[-200px] sm:left-[-250px] w-[200px] sm:w-[250px] transition-all duration-300">
+                                <input
+                                    type="text"
+                                    value={searchQuery}
+                                    onChange={(e) => setSearchQuery(e.target.value)}
+                                    placeholder="Поиск услуг..."
+                                    className="w-full p-2 rounded-[10px] bg-white text-black font-eastman_regular text-[14px] border border-[#6A6A6A]"
+                                    autoFocus
+                                />
+                                {isSearching && (
+                                    <div className="absolute top-full left-0 w-full bg-white rounded-[10px] shadow-lg mt-2 p-2 text-black font-eastman_regular text-[14px]">
+                                        Загрузка...
+                                    </div>
+                                )}
+                                {searchResults.length > 0 && !isSearching && (
+                                    <div className="absolute top-full left-0 w-full bg-white rounded-[10px] shadow-lg mt-2 max-h-[200px] overflow-y-auto">
+                                        {searchResults.map((result) => (
+                                            <Link
+                                                key={result.id}
+                                                to={`/service/${result.id}`}
+                                                className="block p-2 hover:bg-gray-100 text-black font-eastman_regular text-[14px]"
+                                                onClick={() => {
+                                                    setIsSearchOpen(false);
+                                                    setSearchQuery('');
+                                                    setSearchResults([]);
+                                                }}
+                                            >
+                                                {result.title}
+                                            </Link>
+                                        ))}
+                                    </div>
+                                )}
+                            </div>
+                        )}
                     </div>
                     <div>
                         <select name="select" className="bg-transparent text-black 2xl:text-[1.3vw]">
@@ -89,7 +194,6 @@ function BlackHeader() {
                     } transition-transform duration-300 ease-in-out z-50 shadow-lg`}
             >
                 <div className="flex flex-col h-full p-6">
-                    {/* Close Button */}
                     <button className="self-end mb-6" onClick={toggleSidebar}>
                         <svg
                             className="w-6 h-6 text-black"
@@ -106,8 +210,6 @@ function BlackHeader() {
                             />
                         </svg>
                     </button>
-
-                    {/* Menu Items */}
                     <nav className="flex flex-col gap-2 font-eastman_regular text-[18px] text-black">
                         <Link to="/" onClick={toggleSidebar} className="hover:text-gray-500">
                             Главная
@@ -147,8 +249,6 @@ function BlackHeader() {
                     </nav>
                 </div>
             </div>
-
-            {/* Overlay */}
             {isSidebarOpen && (
                 <div
                     className="fixed inset-0 bg-black bg-opacity-50 z-40"
