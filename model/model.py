@@ -35,6 +35,7 @@ class Variant(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String(100), default="", nullable=False, index=True)
+    photo = Column(Text, default="", nullable=True)
     category_id = Column(Integer, ForeignKey("categories.id"), nullable=False)
 
     category = relationship("Category", back_populates="variants")
