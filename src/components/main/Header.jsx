@@ -1,17 +1,29 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import logoMini from '../../assets/img/logo-mini.png';
 
 function Header() {
-  const accessToken = localStorage.getItem('access_token'); 
-  const isAuthenticated = !!accessToken; 
+  const accessToken = localStorage.getItem('access_token');
+  const isAuthenticated = !!accessToken;
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const navigate = useNavigate();
+
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('access_token');
+    setIsSidebarOpen(false);
+    navigate('/login');
+  };
 
   return (
     <div className="flex justify-center mt-5">
       <div className="flex flex-row gap-10 w-[80vw] justify-between">
         <div className="flex flex-col gap-y-4">
           <img src={logoMini} alt="" className="w-[80px] md:w-[100px] 2xl:w-[150px]" />
-          <div className="flex flex-col gap-y-[5px] cursor-pointer">
+          <div className="flex flex-col gap-y-[5px] cursor-pointer" onClick={toggleSidebar}>
             <svg className="w-[30px] h-[2px]" viewBox="0 0 40 2" fill="none" xmlns="http://www.w3.org/2000/svg">
               <line y1="1" x2="40" y2="1" stroke="white" strokeWidth="2" />
             </svg>
@@ -70,6 +82,79 @@ function Header() {
           </Link>
         </div>
       </div>
+
+      {/* Sidebar */}
+      <div
+        className={`fixed top-0 left-0 h-full w-[250px] bg-[#76C6FF] transform ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
+          } transition-transform duration-300 ease-in-out z-50 shadow-lg`}
+      >
+        <div className="flex flex-col h-full p-6">
+          {/* Close Button */}
+          <button className="self-end mb-6" onClick={toggleSidebar}>
+            <svg
+              className="w-6 h-6 text-white"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
+
+          {/* Menu Items */}
+          <nav className="flex flex-col gap-2 font-eastman_regular text-[18px] text-white">
+            <Link to="/" onClick={toggleSidebar} className="hover:text-gray-200">
+              Главная
+            </Link>
+            <Link to="/beauty" onClick={toggleSidebar} className="hover:text-gray-200 mt-3">
+              Красота и здоровье
+            </Link>
+            <Link to="/cleaning" onClick={toggleSidebar} className="hover:text-gray-200">
+              Клининг
+            </Link>
+            <Link to="/tutoring" onClick={toggleSidebar} className="hover:text-gray-200">
+              Репетиторство
+            </Link>
+            <Link to="/building" onClick={toggleSidebar} className="hover:text-gray-200">
+              Строительство
+            </Link>
+            <Link to="/med-service" onClick={toggleSidebar} className="hover:text-gray-200">
+              Медицинские услуги
+            </Link>
+            {isAuthenticated ? (
+              <>
+                <Link to="/profile" onClick={toggleSidebar} className="hover:text-gray-200 mt-5">
+                  Профиль
+                </Link>
+                <button
+                  onClick={handleLogout}
+                  className="text-left hover:text-gray-200 "
+                >
+                  Выйти
+                </button>
+              </>
+            ) : (
+              <Link to="/login" onClick={toggleSidebar} className="hover:text-gray-200">
+                Вход
+              </Link>
+            )}
+          </nav>
+        </div>
+      </div>
+
+      {/* Overlay */}
+      {isSidebarOpen && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 z-40"
+          onClick={toggleSidebar}
+        ></div>
+      )}
     </div>
   );
 }

@@ -3,6 +3,7 @@ import { configureStore } from '@reduxjs/toolkit'
 import authSlice from './reducers/authReducer'
 import userReducer from './reducers/profileReducer'
 import serviceListSlice from './reducers/servicesListReducer'
+import serviceByIdSlice from './reducers/requestCardReducer'
 
 const store = configureStore({
 	reducer: {
@@ -10,6 +11,7 @@ const store = configureStore({
 		auth: authSlice,
 		user: userReducer,
 		serviceList: serviceListSlice,
+		serviceById: serviceByIdSlice,
 	},
 })
 

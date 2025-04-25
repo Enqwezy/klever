@@ -3,28 +3,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import BlackHeader from '../main/BlackHeader';
 import RequestCard from '../UI/cards/RequestCard';
 import {
+    fetchRequestByID,
     setRegions,
     setSubcategories,
-    setPriceRange,
-    setRatingRange,
-    fetchSubcategories,
-    fetchRequests,
     setSortOption,
+    fetchRequests,
 } from '../../store/actions/requestCardAction';
 
-function ServicesList({ service_name }) {
+const ServicesList = ({ service_name }) => {
     const dispatch = useDispatch();
-    const {
-        regions = [],
-        subcategories = ['Маникюр', 'Педикюр', 'Массаж'], 
-        priceRange = { min: '', max: '' },
-        ratingRange = { min: '', max: '' },
-        requests = [
-            { id: 1, title: 'Маникюр', price: 5000, rating: 4.5 },
-            { id: 2, title: 'Педикюр', price: 7000, rating: 4.8 },
-        ], 
-        sortOption = 'по соответствию',
-    } = useSelector((state) => state || {});
+    const { serviceListData, loading, error } = useSelector((state) => state.serviceById);
 
     const [selectedRegions, setSelectedRegions] = useState([]);
     const [selectedSubcategories, setSelectedSubcategories] = useState([]);
@@ -33,14 +21,27 @@ function ServicesList({ service_name }) {
     const [ratingMin, setRatingMin] = useState('');
     const [ratingMax, setRatingMax] = useState('');
     const [showSortOptions, setShowSortOptions] = useState(false);
+    const [sortOption, setSortOption] = useState('по соответствию');
 
-    const regionsList = ['Алматы', 'Нур-Султан', 'Шымкент', 'Кызылорда', 'Караганда'];
+    const regionsList = ['Алматы', 'Нур-Султан', 'Шымкент'];
+    const subcategories = ['Маникюр', 'Педикюр', 'Массаж', 'Стрижка'];
     const sortOptions = ['по соответствию', 'популярные', 'с дешевых', 'с дорогих'];
 
+    // Маппинг service_name к categoryId и отображаемому названию
+    const serviceMap = {
+        beauty: { id: 1, name: 'Красота и здоровье' },
+        cleaning: { id: 2, name: 'Клининг' },
+        tutoring: { id: 3, name: 'Репетиторство' },
+        building: { id: 4, name: 'Строительство' },
+        med_service: { id: 5, name: 'Медицинские услуги' },
+    };
+
     useEffect(() => {
-        dispatch(fetchSubcategories()); 
-        dispatch(setRegions(regionsList)); 
-    }, [dispatch]);
+        const category = serviceMap[service_name];
+        if (category) {
+            dispatch(fetchRequestByID(category.id));
+        }
+    }, [service_name, dispatch]);
 
     const handleCheckboxChange = (region) => {
         const updatedRegions = selectedRegions.includes(region)
@@ -59,34 +60,50 @@ function ServicesList({ service_name }) {
     };
 
     const handleSortOptionChange = (option) => {
+        setSortOption(option);
         dispatch(setSortOption(option));
         setShowSortOptions(false);
-        handleFind(); 
+        handleFind();
     };
 
     const handleFind = () => {
         const filters = {
             regions: selectedRegions,
             subcategories: selectedSubcategories,
-            priceMin: priceMin || null,
-            priceMax: priceMax || null,
-            ratingMin: ratingMin || null,
-            ratingMax: ratingMax || null,
+            priceMin: priceMin ? Number(priceMin) : null,
+            priceMax: priceMax ? Number(priceMax) : null,
+            ratingMin: ratingMin ? Number(ratingMin) : null,
+            ratingMax: ratingMax ? Number(ratingMax) : null,
             sort: sortOption,
+            categoryId: serviceMap[service_name]?.id,
         };
         dispatch(fetchRequests(filters));
     };
 
+    const handlePriceIgnore = () => {
+        setPriceMin('');
+        setPriceMax('');
+    };
+
+    const handleRatingIgnore = () => {
+        setRatingMin('');
+        setRatingMax('');
+    };
+
     return (
-        <div>
+        <div className="min-h-screen bg-[#F8F8F8]">
             <BlackHeader />
-            <div className="flex justify-center items-center flex-col">
-                <div className="font-eastman_regular 2xl:text-[3vw]">{service_name === 'beauty' ? 'Красота и здоровье' : service_name === 'cleaning' ? 'Клининг' : service_name === 'tutoring' ? 'Репетиторство' : service_name === 'building' ? 'Строительство' : service_name === 'med_service' ? 'Медицинские услуги' : ''}</div>
-                <div className="flex flex-row gap-5 w-[80vw] border">
-                    <div className="max-w-[30vw] flex flex-col gap-5">
-                        <div>
+            <div className="flex justify-center items-start flex-col px-4 py-8">
+                <h1 className="font-eastman_medium text-[24px] sm:text-[32px] xl:text-[40px] text-[#0A0A0A] text-center w-full mb-6">
+                    {serviceMap[service_name]?.name || 'Услуги'}
+                </h1>
+                <div className="flex flex-col md:flex-row gap-6 w-full max-w-[90vw] mx-auto">
+                    {/* Фильтры */}
+                    <div className="w-full md:w-[30%] flex flex-col gap-6 bg-white p-6 rounded-[20px] shadow-container">
+                        {/* Сортировка */}
+                        <div className="relative">
                             <button
-                                className="bg-[#1D217C] rounded-[10px] text-white font-eastman_regular flex flex-row gap-2 justify-center items-center 2xl:py-1 2xl:px-5"
+                                className="bg-[#1D217C] rounded-[10px] text-white font-eastman_regular flex flex-row gap-2 justify-center items-center py-2 px-4 w-full"
                                 onClick={() => setShowSortOptions(!showSortOptions)}
                             >
                                 {sortOption}
@@ -103,11 +120,11 @@ function ServicesList({ service_name }) {
                                 </svg>
                             </button>
                             {showSortOptions && (
-                                <div className="absolute bg-white border rounded shadow-lg mt-2">
+                                <div className="absolute z-10 bg-white border rounded shadow-lg mt-2 w-full">
                                     {sortOptions.map((option, index) => (
                                         <div
                                             key={index}
-                                            className="p-2 hover:bg-gray-100 cursor-pointer"
+                                            className="p-2 hover:bg-gray-100 cursor-pointer font-eastman_regular text-[14px]"
                                             onClick={() => handleSortOptionChange(option)}
                                         >
                                             {option}
@@ -116,96 +133,138 @@ function ServicesList({ service_name }) {
                                 </div>
                             )}
                         </div>
+
+                        {/* Регионы */}
                         <div>
-                            <h1 className="font-eastman_medium 2xl:text-[1vw]">Регион/Город</h1>
-                            <div className="2xl:text-[1vw]">
+                            <h2 className="font-eastman_medium text-[16px] sm:text-[18px] mb-2">Регион/Город</h2>
+                            <div className="flex flex-col gap-2 text-[14px] sm:text-[16px]">
                                 {regionsList.map((region, index) => (
-                                    <div key={index} className="checkbox-item">
+                                    <label key={index} className="flex items-center gap-2 cursor-pointer">
                                         <input
                                             type="checkbox"
                                             id={`region-${index}`}
                                             checked={selectedRegions.includes(region)}
                                             onChange={() => handleCheckboxChange(region)}
+                                            className="w-4 h-4"
                                         />
-                                        <label htmlFor={`region-${index}`}> {region}</label>
-                                    </div>
+                                        {region}
+                                    </label>
                                 ))}
                             </div>
                         </div>
+
+                        {/* Подкатегории */}
                         <div>
-                            <h1 className="font-eastman_medium 2xl:text-[1vw]">Подкатегории</h1>
-                            <div className="2xl:text-[1vw]">
+                            <h2 className="font-eastman_medium text-[16px] sm:text-[18px] mb-2">Подкатегории</h2>
+                            <div className="flex flex-col gap-2 text-[14px] sm:text-[16px]">
                                 {subcategories.map((subcategory, index) => (
-                                    <div key={index} className="checkbox-item">
+                                    <label key={index} className="flex items-center gap-2 cursor-pointer">
                                         <input
                                             type="checkbox"
                                             id={`subcategory-${index}`}
                                             checked={selectedSubcategories.includes(subcategory)}
                                             onChange={() => handleSubcategoryChange(subcategory)}
+                                            className="w-4 h-4"
                                         />
-                                        <label htmlFor={`subcategory-${index}`}> {subcategory}</label>
-                                    </div>
+                                        {subcategory}
+                                    </label>
                                 ))}
                             </div>
                         </div>
+
+                        {/* Стоимость */}
                         <div>
-                            <h1 className="font-eastman_medium 2xl:text-[1vw]">Стоимость</h1>
-                            <div>
-                                <input type="checkbox" /> Не имеет значения
-                                от{' '}
+                            <h2 className="font-eastman_medium text-[16px] sm:text-[18px] mb-2">Стоимость</h2>
+                            <label className="flex items-center gap-2 mb-2 text-[14px] sm:text-[16px]">
                                 <input
-                                    type="text"
+                                    type="checkbox"
+                                    onChange={handlePriceIgnore}
+                                    checked={!priceMin && !priceMax}
+                                    className="w-4 h-4"
+                                />
+                                Не имеет значения
+                            </label>
+                            <div className="flex gap-2">
+                                <input
+                                    type="number"
                                     value={priceMin}
                                     onChange={(e) => setPriceMin(e.target.value)}
+                                    placeholder="От"
+                                    className="border border-[#6A6A6A] rounded-[8px] p-2 w-full text-[14px]"
                                 />
-                                до{' '}
                                 <input
-                                    type="text"
+                                    type="number"
                                     value={priceMax}
                                     onChange={(e) => setPriceMax(e.target.value)}
+                                    placeholder="До"
+                                    className="border border-[#6A6A6A] rounded-[8px] p-2 w-full text-[14px]"
                                 />
                             </div>
                         </div>
+
+                        {/* Рейтинг */}
                         <div>
-                            <h1 className="font-eastman_medium 2xl:text-[1vw]">Рейтинг</h1>
-                            <div>
-                                <input type="checkbox" /> Не имеет значения
-                                от{' '}
+                            <h2 className="font-eastman_medium text-[16px] sm:text-[18px] mb-2">Рейтинг</h2>
+                            <label className="flex items-center gap-2 mb-2 text-[14px] sm:text-[16px]">
                                 <input
-                                    type="text"
+                                    type="checkbox"
+                                    onChange={handleRatingIgnore}
+                                    checked={!ratingMin && !ratingMax}
+                                    className="w-4 h-4"
+                                />
+                                Не имеет значения
+                            </label>
+                            <div className="flex gap-2">
+                                <input
+                                    type="number"
                                     value={ratingMin}
                                     onChange={(e) => setRatingMin(e.target.value)}
+                                    placeholder="От"
+                                    className="border border-[#6A6A6A] rounded-[8px] p-2 w-full text-[14px]"
                                 />
-                                до{' '}
                                 <input
-                                    type="text"
+                                    type="number"
                                     value={ratingMax}
                                     onChange={(e) => setRatingMax(e.target.value)}
+                                    placeholder="До"
+                                    className="border border-[#6A6A6A] rounded-[8px] p-2 w-full text-[14px]"
                                 />
                             </div>
                         </div>
-                        <div>
-                            <button
-                                className="bg-green-700 text-white p-5 rounded-2xl"
-                                onClick={handleFind}
-                            >
-                                Найти
-                            </button>
-                        </div>
+
+                        {/* Кнопка Найти */}
+                        <button
+                            className="bg-green-700 text-white rounded-[12px] py-3 font-eastman_regular text-[16px] hover:bg-green-800 transition-all duration-200"
+                            onClick={handleFind}
+                        >
+                            Найти
+                        </button>
                     </div>
-                    <div>
-                        {requests.length > 0 ? (
-                            requests.map((request) => (
+
+                    {/* Список услуг */}
+                    <div className="w-full md:w-[70%] flex flex-col gap-6">
+                        {loading ? (
+                            <div className="text-center text-[18px] font-eastman_regular animate-pulse">
+                                Загрузка...
+                            </div>
+                        ) : error ? (
+                            <div className="text-center text-red-600 text-[18px] font-eastman_regular">
+                                Ошибка: {error}
+                            </div>
+                        ) : serviceListData?.length > 0 ? (
+                            serviceListData.map((request) => (
                                 <RequestCard key={request.id} data={request} />
                             ))
                         ) : (
-                            <div>Нет доступных запросов</div>
+                            <div className="text-center text-[18px] font-eastman_regular">
+                                Нет доступных запросов
+                            </div>
                         )}
                     </div>
                 </div>
             </div>
         </div>
     );
-}
+};
 
 export default ServicesList;
