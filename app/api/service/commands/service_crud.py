@@ -3,7 +3,9 @@ from model.model import Service, Review, Variant
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, func, update
 from sqlalchemy.orm import joinedload 
-from fastapi import HTTPException
+from fastapi import HTTPException, UploadFile
+from decimal import Decimal
+import os
 
 
 logger = logging.getLogger(__name__)
@@ -77,3 +79,41 @@ async def get_service_by_id(service_id: int, db: AsyncSession):
         "service": service,
         "review_count": len(service.reviews)
     }
+
+
+async def create_service(
+    name: str,
+    description: str,
+    price: Decimal,
+    photo: UploadFile,
+    rating: float,
+    city_id: int,
+    variant_id: int,
+    specialist_id: int,
+    db: AsyncSession
+) -> Service:
+    photo_path = None
+
+    if photo:
+        photo_filename = f"uploads/services/photos/{photo.filename}"
+        os.makedirs(os.path.dirname(photo_filename), exist_ok=True)
+        with open(photo_filename, "wb") as f:
+            f.write(await photo.read())
+        photo_path = photo_filename
+
+    service=Service(
+        name=name,
+        description=description,
+        price=price,
+        photo=photo_path,
+        rating=rating,
+        city_id=city_id,
+        variant_id=variant_id,
+        specialist_id=specialist_id
+    )
+
+    db.add(service)
+    await db.commit()
+    await db.refresh(service)
+
+    return service

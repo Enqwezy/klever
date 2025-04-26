@@ -1,9 +1,10 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, Form
 from sqlalchemy.ext.asyncio import AsyncSession
 from app.api.service.schemas.response import ServicesResponse, ServiceResponse
 from app.api.service.commands.service_crud import get_services_by_category, get_service_by_id
 from typing import List
 from database.db import get_db
+from decimal import Decimal
 
 
 router= APIRouter()
@@ -41,3 +42,15 @@ async def get_service(
         "specialist": service_data["service"].specialist.__dict__,
         "review_count": service_data["review_count"]
     }
+
+# @router.post(
+#     "/service/add-service",
+#     summary="Добавить сервис",
+#     response_model=dict
+# )
+# async def create_new_service(
+#     name: str = Form(default=""),
+#     description: str = Form(default=""),
+#     price: Decimal = Form(...),
+#     photo: str = Form
+# )

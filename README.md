@@ -16,3 +16,4 @@ EXECUTE FUNCTION update_service_search_vector();
 
 UPDATE services
 SET search_vector = to_tsvector('russian', COALESCE(name, '') || ' ' || COALESCE(description, ''));
+

@@ -10,3 +10,8 @@ class VariantsResponse(BaseModel):
 
     class Config:
         from_attributes = True
+
+class VariantResponse(BaseModel):
+    id: int
+    name: str
+    message: str
