@@ -1,11 +1,14 @@
 import logging
-from model.model import Service, Review, Variant
+from model.model import Service, Variant, Specialist, City
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, func, update
 from sqlalchemy.orm import joinedload 
 from fastapi import HTTPException, UploadFile
-from decimal import Decimal
 import os
+from app.api.service.schemas.create import ServiceCreate
+import uuid
+import aiofiles
+import re
 
 
 logger = logging.getLogger(__name__)
@@ -82,38 +85,55 @@ async def get_service_by_id(service_id: int, db: AsyncSession):
 
 
 async def create_service(
-    name: str,
-    description: str,
-    price: Decimal,
-    photo: UploadFile,
-    rating: float,
-    city_id: int,
-    variant_id: int,
-    specialist_id: int,
+    service_data: ServiceCreate,
+    photo: UploadFile | None,
     db: AsyncSession
 ) -> Service:
+    logger.debug(f"Creating service with name={service_data.name}, city_id={service_data.city_id}, variant_id={service_data.variant_id}, specialist_id={service_data.specialist_id}")
+
+    city = await db.get(City, service_data.city_id)
+    if not city:
+        raise HTTPException(status_code=404, detail="City not found")
+
+    variant = await db.get(Variant, service_data.variant_id)
+    if not variant:
+        raise HTTPException(status_code=404, detail="Variant not found")
+
+    specialist = await db.get(Specialist, service_data.specialist_id)
+    if not specialist:
+        raise HTTPException(status_code=404, detail="Specialist not found")
+
     photo_path = None
-
     if photo:
-        photo_filename = f"uploads/services/photos/{photo.filename}"
-        os.makedirs(os.path.dirname(photo_filename), exist_ok=True)
-        with open(photo_filename, "wb") as f:
-            f.write(await photo.read())
-        photo_path = photo_filename
+        try:
+            photo_filename = f"uploads/photos/services/{uuid.uuid4()}"
+            os.makedirs(os.path.dirname(photo_filename), exist_ok=True)
+            async with aiofiles.open(photo_filename, "wb") as f:
+                await f.write(await photo.read())
+            photo_path = photo_filename
+        except Exception as e:
+            logger.error(f"Failed to save photo: {e}")
+            raise HTTPException(status_code=500, detail="Failed to save photo")
 
-    service=Service(
-        name=name,
-        description=description,
-        price=price,
+    service = Service(
+        name=service_data.name,
+        description=service_data.description,
+        price=service_data.price,
         photo=photo_path,
-        rating=rating,
-        city_id=city_id,
-        variant_id=variant_id,
-        specialist_id=specialist_id
+        city_id=service_data.city_id,
+        variant_id=service_data.variant_id,
+        specialist_id=service_data.specialist_id
     )
 
-    db.add(service)
-    await db.commit()
-    await db.refresh(service)
+    try:
+        db.add(service)
+        await db.commit()
+        await db.refresh(service)
+    except Exception as e:
+        if photo_path and os.path.exists(photo_path):
+            os.remove(photo_path)
+        logger.error(f"Error creating service: {e}")
+        raise HTTPException(status_code=500, detail="Failed to create service")
 
+    logger.info(f"Service created with id={service.id}")
     return service

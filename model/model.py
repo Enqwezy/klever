@@ -76,7 +76,7 @@ class Service(Base):
     description = Column(Text, default="", nullable=True)
     price = Column(DECIMAL(10, 2), nullable=True)
     photo = Column(Text, nullable=True)
-    rating = Column(Float, nullable=True)
+    rating = Column(Float, default=0.0)
     created_at = Column(DateTime(timezone=True), default=func.now(), nullable=False)
     search_rank = Column(Float, default=0, nullable=True)
     search_vector = Column(TSVECTOR, nullable=True)

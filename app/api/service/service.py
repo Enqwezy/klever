@@ -1,11 +1,15 @@
-from fastapi import APIRouter, Depends, Form
+from fastapi import APIRouter, Depends, Form, UploadFile, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 from app.api.service.schemas.response import ServicesResponse, ServiceResponse
-from app.api.service.commands.service_crud import get_services_by_category, get_service_by_id
+from app.api.service.commands.service_crud import get_services_by_category, get_service_by_id, create_service
 from typing import List
 from database.db import get_db
-from decimal import Decimal
+from app.api.service.schemas.create import ServiceCreate
+import logging
 
+
+logger = logging.getLogger(__name__)
+logging.basicConfig(level=logging.INFO)
 
 router= APIRouter()
 
@@ -43,14 +47,46 @@ async def get_service(
         "review_count": service_data["review_count"]
     }
 
-# @router.post(
-#     "/service/add-service",
-#     summary="Добавить сервис",
-#     response_model=dict
-# )
-# async def create_new_service(
-#     name: str = Form(default=""),
-#     description: str = Form(default=""),
-#     price: Decimal = Form(...),
-#     photo: str = Form
-# )
+@router.post(
+    "/add-service",
+    summary="Создать услугу",
+    response_model=dict
+)
+async def create_new_service(
+    name: str = Form(...),
+    description: str | None = Form(default=None),
+    price: float | None = Form(default=None),
+    city_id: int = Form(...),
+    variant_id: int = Form(...),
+    specialist_id: int = Form(...),
+    photo: UploadFile | None = Form(default=None),
+    db: AsyncSession = Depends(get_db)
+):
+    logger.debug(f"Received request to create service: name={name}, city_id={city_id}, variant_id={variant_id}, specialist_id={specialist_id}")
+    
+    try:
+        service_data = ServiceCreate(
+            name=name,
+            description=description,
+            price=price,
+            city_id=city_id,
+            variant_id=variant_id,
+            specialist_id=specialist_id
+        )
+        
+        service = await create_service(
+            service_data=service_data,
+            photo=photo,
+            db=db
+        )
+        
+        return {
+            "id": service.id,
+            "name": service.name,
+            "message": "Service created successfully"
+        }
+    except HTTPException as e:
+        raise
+    except Exception as e:
+        logger.error(f"Error creating service: {e}")
+        raise HTTPException(status_code=500, detail="Internal server error")
