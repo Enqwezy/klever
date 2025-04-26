@@ -1,13 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { serviceProfile } from '../actions/serviceProfileActions'
+import { serviceProfile } from '../actions/serviceProfileAction'
 
 const initialState = {
-	serviceProfileData: [
-		{
-			id: 1,
-			nameService: 'wrfrf',
-		},
-	],
+	serviceProfileData: null,
 	loading: false,
 	error: null,
 }

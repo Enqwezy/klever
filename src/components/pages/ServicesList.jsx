@@ -9,6 +9,7 @@ import {
     setSortOption,
     fetchRequests,
 } from '../../store/actions/requestCardAction';
+import { Link } from 'react-router-dom';
 
 const ServicesList = ({ service_name }) => {
     const dispatch = useDispatch();
@@ -20,6 +21,7 @@ const ServicesList = ({ service_name }) => {
     const [priceMax, setPriceMax] = useState('');
     const [ratingMin, setRatingMin] = useState('');
     const [ratingMax, setRatingMax] = useState('');
+
     const [showSortOptions, setShowSortOptions] = useState(false);
     const [sortOption, setSortOption] = useState('по соответствию');
 
@@ -35,6 +37,8 @@ const ServicesList = ({ service_name }) => {
         building: { id: 4, name: 'Строительство' },
         med_service: { id: 5, name: 'Медицинские услуги' },
     };
+
+    
 
     useEffect(() => {
         const category = serviceMap[service_name];
@@ -97,6 +101,29 @@ const ServicesList = ({ service_name }) => {
                 <h1 className="font-eastman_medium text-[24px] sm:text-[32px] xl:text-[40px] text-[#0A0A0A] text-center w-full mb-6">
                     {serviceMap[service_name]?.name || 'Услуги'}
                 </h1>
+                    <Link to={`/${service_name}`} className="flex items-center mb-4 sm:mb-6 md:mb-8 ml-12">
+                        <button
+                            className="flex items-center gap-2 bg-black text-white px-3 py-2 sm:px-4 sm:py-2 rounded hover:bg-gray-800 text-sm sm:text-base md:text-lg transition-colors duration-200"
+                        >
+                            <svg
+                                width="20"
+                                height="20"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                                className="w-5 h-5 sm:w-6 sm:h-6"
+                            >
+                                <path
+                                    d="M15 18L9 12L15 6"
+                                    stroke="white"
+                                    strokeWidth="2"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                />
+                            </svg>
+                            Назад
+                        </button>
+                    </Link>
                 <div className="flex flex-col md:flex-row gap-6 w-full max-w-[90vw] mx-auto">
                     {/* Фильтры */}
                     <div className="w-full md:w-[30%] flex flex-col gap-6 bg-white p-6 rounded-[20px] shadow-container">
@@ -253,7 +280,7 @@ const ServicesList = ({ service_name }) => {
                             </div>
                         ) : serviceData?.length > 0 ? (
                             serviceData.map((request) => (
-                                <RequestCard key={request.id} data={request} />
+                                <RequestCard key={request.id} data={request} service_name={service_name} />
                             ))
                         ) : (
                             <div className="text-center text-[18px] font-eastman_regular">
@@ -261,6 +288,7 @@ const ServicesList = ({ service_name }) => {
                             </div>
                         )}
                     </div>
+                    
                 </div>
             </div>
         </div>

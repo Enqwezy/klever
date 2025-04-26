@@ -3,10 +3,9 @@ import { getServiceProfile } from '../services/serviceProfileService'
 
 export const serviceProfile = createAsyncThunk(
 	'service/profile',
-	async (_, { rejectWithValue }) => {
+	async (service_id, { rejectWithValue }) => {
 		try {
-			const data = await getServiceProfile()
-			console.log('Verification response:', data)
+			const data = await getServiceProfile(service_id)
 			return data
 		} catch (error) {
 			const errorMessage =

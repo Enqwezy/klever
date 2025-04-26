@@ -6,7 +6,6 @@ export const serviceList = createAsyncThunk(
 	async (category_id, { rejectWithValue }) => {
 		try {
 			const data = await getServiceListById(category_id)
-			console.log('Service list response:', data)
 			return data
 		} catch (error) {
 			const errorMessage =

@@ -63,8 +63,7 @@ function Services({service_name}) {
                     </Link>
 
                     {serviceListData.map((data) =>
-                        console.log(data) 
-                        // <ServicesCard name={data.name} description={data.description} photo={data.photo} />
+                        <ServicesCard name={data.name} description={data.description} photo={data.photo} />
                     )}
                 </div>
             </div>
@@ -76,7 +75,7 @@ function Services({service_name}) {
                 <div className='xl:grid xl:grid-cols-2 gap-3 '>
                     
                     {serviceData.map((request)=>
-                    <RequestCard data={request}/>
+                    <RequestCard data={request} service_name={service_name} />
                     )}
                 </div>
                 {serviceData.length === 0 ? (
