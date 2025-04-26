@@ -14,13 +14,7 @@ function BlackHeader() {
     const searchRef = useRef(null);
     const debounceTimeout = useRef(null);
 
-    // Функция имитации поиска (замените на реальный API-запрос)
     const searchRequests = async (query) => {
-        // Пример: запрос к серверу
-        // const response = await fetch(`/api/search?q=${query}`);
-        // return response.json();
-
-        // Имитация результатов
         return [
             { id: 1, title: `Услуга ${query} 1` },
             { id: 2, title: `Услуга ${query} 2` },
@@ -28,7 +22,6 @@ function BlackHeader() {
         ];
     };
 
-    // Обработка поиска с debounce
     useEffect(() => {
         if (searchQuery.trim() === '') {
             setSearchResults([]);
@@ -56,7 +49,6 @@ function BlackHeader() {
         return () => clearTimeout(debounceTimeout.current);
     }, [searchQuery]);
 
-    // Закрытие поиска при клике вне области
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (searchRef.current && !searchRef.current.contains(event.target)) {
@@ -91,7 +83,9 @@ function BlackHeader() {
         <div className="flex justify-center mt-5">
             <div className="flex flex-row gap-10 w-[80vw] justify-between items-center">
                 <div className="flex flex-col gap-y-4">
+                    <Link to={'/'} className='cursor-pointer'>
                     <img src={logoMini} alt="" className="w-[80px] md:w-[100px] 2xl:w-[150px]" />
+                    </Link>
                     <div className="flex flex-col gap-y-[5px] cursor-pointer" onClick={toggleSidebar}>
                         <svg className="w-[30px] h-[2px]" viewBox="0 0 40 2" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <line y1="1" x2="40" y2="1" stroke="black" strokeWidth="2" />
@@ -106,36 +100,43 @@ function BlackHeader() {
                 </div>
                 <div className="flex flex-row gap-5 md:gap-6 lg:gap-7 xl:gap-10 2xl:items-center">
                     <div className="relative" ref={searchRef}>
-                        <svg
-                            className="w-[40px] h-[40px] 2xl:w-[60px] 2xl:h-[60px] cursor-pointer"
-                            viewBox="0 0 57 57"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                            onClick={toggleSearch}
+                        <div
+                            className={`flex items-center bg-[#F8F8F8] rounded-[10px] transition-all duration-300 ease-in-out ${isSearchOpen ? 'w-[200px] sm:w-[250px] md:w-[270px] xl:w-[350px]  pl-2' : 'w-[40px] 2xl:w-[60px]'
+                                } h-[40px] 2xl:h-[60px]`}
                         >
-                            <circle cx="28.5" cy="28.5" r="28.5" fill="#F8F8F8" />
-                            <path
-                                d="M27.0117 35.0234C28.9688 35.0234 30.7734 34.3906 32.25 33.3359L37.8047 38.8906C38.0625 39.1484 38.4023 39.2773 38.7656 39.2773C39.5273 39.2773 40.0664 38.6914 40.0664 37.9414C40.0664 37.5898 39.9492 37.25 39.6914 37.0039L34.1719 31.4727C35.332 29.9492 36.0234 28.0625 36.0234 26.0117C36.0234 21.0547 31.9688 17 27.0117 17C22.0664 17 18 21.043 18 26.0117C18 30.9688 22.0547 35.0234 27.0117 35.0234ZM27.0117 33.0781C23.1445 33.0781 19.9453 29.8789 19.9453 26.0117C19.9453 22.1445 23.1445 18.9453 27.0117 18.9453C30.8789 18.9453 34.0781 22.1445 34.0781 26.0117C34.0781 29.8789 30.8789 33.0781 27.0117 33.0781Z"
-                                fill="#141414"
-                            />
-                        </svg>
-                        {isSearchOpen && (
-                            <div className="absolute top-0 left-[-200px] sm:left-[-250px] w-[200px] sm:w-[250px] transition-all duration-300">
+                            <svg
+                                className="w-[40px] h-[40px] 2xl:w-[60px] 2xl:h-[60px] cursor-pointer"
+                                viewBox="0 0 57 57"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                                onClick={toggleSearch}
+                            >
+                                <circle cx="28.5" cy="28.5" r="28.5" fill="#F8F8F8" />
+                                <path
+                                    d="M27.0117 35.0234C28.9688 35.0234 30.7734 34.3906 32.25 33.3359L37.8047 38.8906C38.0625 39.1484 38.4023 39.2773 38.7656 39.2773C39.5273 39.2773 40.0664 38.6914 40.0664 37.9414C40.0664 37.5898 39.9492 37.25 39.6914 37.0039L34.1719 31.4727C35.332 29.9492 36.0234 28.0625 36.0234 26.0117C36.0234 21.0547 31.9688 17 27.0117 17C22.0664 17 18 21.043 18 26.0117C18 30.9688 22.0547 35.0234 27.0117 35.0234ZM27.0117 33.0781C23.1445 33.0781 19.9453 29.8789 19.9453 26.0117C19.9453 22.1445 23.1445 18.9453 27.0117 18.9453C30.8789 18.9453 34.0781 22.1445 34.0781 26.0117C34.0781 29.8789 30.8789 33.0781 27.0117 33.0781Z"
+                                    fill="#141414"
+                                />
+                            </svg>
+                            {isSearchOpen && (
                                 <input
                                     type="text"
                                     value={searchQuery}
                                     onChange={(e) => setSearchQuery(e.target.value)}
                                     placeholder="Поиск услуг..."
-                                    className="w-full p-2 rounded-[10px] bg-white text-black font-eastman_regular text-[14px] border border-[#6A6A6A]"
+                                    className="flex-1 p-2 bg-transparent text-black font-eastman_regular text-[14px] outline-none"
                                     autoFocus
                                 />
+                            )}
+                        </div>
+                        {isSearchOpen && (
+                            <div className="absolute top-full left-0 w-[200px] sm:w-[250px] mt-2">
                                 {isSearching && (
-                                    <div className="absolute top-full left-0 w-full bg-white rounded-[10px] shadow-lg mt-2 p-2 text-black font-eastman_regular text-[14px]">
+                                    <div className="bg-white rounded-[10px] shadow-lg p-2 text-black font-eastman_regular text-[14px]">
                                         Загрузка...
                                     </div>
                                 )}
                                 {searchResults.length > 0 && !isSearching && (
-                                    <div className="absolute top-full left-0 w-full bg-white rounded-[10px] shadow-lg mt-2 max-h-[200px] overflow-y-auto">
+                                    <div className="bg-white rounded-[10px] shadow-lg max-h-[200px] overflow-y-auto">
                                         {searchResults.map((result) => (
                                             <Link
                                                 key={result.id}
@@ -152,15 +153,22 @@ function BlackHeader() {
                                         ))}
                                     </div>
                                 )}
+                                {!isSearching && searchQuery && searchResults.length === 0 && (
+                                    <div className="bg-white rounded-[10px] shadow-lg p-2 text-black font-eastman_regular text-[14px]">
+                                        Ничего не найдено
+                                    </div>
+                                )}
                             </div>
                         )}
                     </div>
                     <div>
-                        <select name="select" className="bg-transparent text-black 2xl:text-[1.3vw]">
+                        <select
+                            name="select"
+                            className="bg-transparent text-black 2xl:text-[1.3vw]"
+                            defaultValue="value2"
+                        >
                             <option value="value1">Ру</option>
-                            <option value="value2" selected>
-                                Қз
-                            </option>
+                            <option value="value2">Қз</option>
                             <option value="value3">En</option>
                         </select>
                     </div>

@@ -1,4 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit'
+import {thunk} from 'redux-thunk'
 // import albumReducer from './reducers/serviceCardReducer'
 import authSlice from './reducers/authReducer'
 import userReducer from './reducers/profileReducer'
@@ -13,6 +14,7 @@ const store = configureStore({
 		serviceList: serviceListSlice,
 		serviceById: serviceByIdSlice,
 	},
+	middleware: getDefaultMiddleware => getDefaultMiddleware().concat(thunk),
 })
 
 export default store

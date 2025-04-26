@@ -163,11 +163,13 @@ function Header() {
             )}
           </div>
           <div>
-            <select name="select" className="bg-transparent text-white 2xl:text-[1.3vw]">
+            <select
+              name="select"
+              className="bg-transparent text-white 2xl:text-[1.3vw]"
+              defaultValue="value2"
+            >
               <option value="value1">Ру</option>
-              <option value="value2" selected>
-                Қз
-              </option>
+              <option value="value2">Қз</option>
               <option value="value3">En</option>
             </select>
           </div>

@@ -5,12 +5,11 @@ export const fetchRequestByID = createAsyncThunk(
 	'request/byId',
 	async (category_id, { rejectWithValue }) => {
 		try {
-			const response = await getRequestByID(category_id)
-			debugger
-			return response.data || {}
-
+			const data = await getRequestByID(category_id)
+			return data 
 		} catch (error) {
-			const errorMessage = error.message || 'Ошибка получения данных услуги'
+			const errorMessage =
+				error.response?.data?.detail || 'Ошибка получения данных услуги'
 			return rejectWithValue(errorMessage)
 		}
 	}

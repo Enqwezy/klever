@@ -12,7 +12,7 @@ import {
 
 const ServicesList = ({ service_name }) => {
     const dispatch = useDispatch();
-    const { serviceListData, loading, error } = useSelector((state) => state.serviceById);
+    const { serviceData, loading, error } = useSelector((state) => state.serviceById);
 
     const [selectedRegions, setSelectedRegions] = useState([]);
     const [selectedSubcategories, setSelectedSubcategories] = useState([]);
@@ -251,8 +251,8 @@ const ServicesList = ({ service_name }) => {
                             <div className="text-center text-red-600 text-[18px] font-eastman_regular">
                                 Ошибка: {error}
                             </div>
-                        ) : serviceListData?.length > 0 ? (
-                            serviceListData.map((request) => (
+                        ) : serviceData?.length > 0 ? (
+                            serviceData.map((request) => (
                                 <RequestCard key={request.id} data={request} />
                             ))
                         ) : (

@@ -7,17 +7,23 @@ import RequestCard from '../UI/cards/RequestCard'
 import requestPhoto from '../../assets/img/request-card.png'
 import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { getServiceListById } from '../../store/services/servicesListService'
+// import { serviceList } from '../../store/services/servicesListService'
+// import { fetchRequestByID } from '../../store/services/requestCardService'
+import { fetchRequestByID } from '../../store/actions/requestCardAction'
+import { serviceList } from '../../store/actions/servicesListAction'
 
 function Services({service_name}) {
     const dispatch = useDispatch()
     const { serviceListData } = useSelector((state) => state.serviceList)
+    const { serviceData, loading, error } = useSelector((state) => state.serviceById);
+
     const categoryId = service_name === 'beauty' ? 1 : service_name === 'cleaning' ? 2 : service_name === 'tutoring' ? 3 : service_name === 'building' ? 4 : service_name === 'med_service' ? 5 : null
 
     useEffect (() => {
         const fetchData = async () => {
             try {
-                await dispatch(getServiceListById(categoryId))
+                await dispatch(serviceList(categoryId))
+                await dispatch(fetchRequestByID(categoryId))
             } catch (error) {
                 console.error('Error fetching service list:', error)
             }
@@ -25,41 +31,7 @@ function Services({service_name}) {
         fetchData()
     }, [])
 
-    const request = [
-        {
-            id: 1,
-            name: 'Макияж, прически',
-            photo: requestPhoto,
-            price: 6000,
-            description: 'Макияж(образ), который понравится всем, только люкс материалы, прически любой сложности, в студии и на выезд',
-            address: 'г. Нур-Султан Шевченко 20',
-            reviews: 10,
-            rate: 4.7,
-            created_at: '22.06.2022',
-        },
-        {
-            id: 1,
-            name: 'Макияж, прически',
-            photo: requestPhoto,
-            price: 6000,
-            description: 'Макияж(образ), который понравится всем, только люкс материалы, прически любой сложности, в студии и на выезд',
-            address: 'г. Нур-Султан Шевченко 20',
-            reviews: 10,
-            rate: 4.7,
-            created_at: '22.06.2022',
-        },
-        {
-            id: 1,
-            name: 'Макияж, прически',
-            photo: requestPhoto,
-            price: 6000,
-            description: 'Макияж(образ), который понравится всем, только люкс материалы, прически любой сложности, в студии и на выезд',
-            address: 'г. Нур-Султан Шевченко 20',
-            reviews: 10,
-            rate: 4.7,
-            created_at: '22.06.2022',
-        },
-    ]
+    
 
     return (
         <div className=''>
@@ -91,7 +63,8 @@ function Services({service_name}) {
                     </Link>
 
                     {serviceListData.map((data) =>
-                        <ServicesCard name={data.name} description={data.description} photo={data.photo} />
+                        console.log(data) 
+                        // <ServicesCard name={data.name} description={data.description} photo={data.photo} />
                     )}
                 </div>
             </div>
@@ -101,10 +74,14 @@ function Services({service_name}) {
                     Новые заявки
                 </div>
                 <div className='xl:grid xl:grid-cols-2 gap-3 '>
-                    {request.map((request)=>
+                    
+                    {serviceData.map((request)=>
                     <RequestCard data={request}/>
                     )}
                 </div>
+                {serviceData.length === 0 ? (
+                    <div className='text-center text-[1.5vw] font-eastman_regular'>Заявок нет</div>
+                ) : null}
 
             </div>
             <Footer/>

@@ -27,8 +27,8 @@ function Home() {
     };
 
     const getVisibleSlides = () => {
-        if (window.innerWidth < 640) return 1; 
-        if (window.innerWidth < 1024) return 2; 
+        if (window.innerWidth < 640) return 1;
+        if (window.innerWidth < 1024) return 2;
         return 3; һ
     };
 
@@ -141,10 +141,25 @@ function Home() {
                         alt="Some Clever"
                         className="w-full sm:w-[50vw] lg:w-[40vw] xl:w-[35vw] object-cover"
                     />
-                    <div className="flex flex-col mt-6 lg:mt-[20vh] px-4 sm:px-8 lg:px-12">
-                        <div className="text-[20px] sm:text-[22px] xl:text-[25px] font-eastman_medium text-center ">
-                            О нас
-                        </div>
+                    <div className="flex flex-col mt-6 lg:mt-[20vh] px-4 sm:px-8 lg:px-12 items-center">
+                        <Link to={'/about'} className="text-[20px] sm:text-[22px] xl:text-[25px] font-eastman_medium text-center flex flex-row gap-2 items-center cursor-pointer">
+                            <p className='hover:text-gray-600 hover:underline hover:decoration-[#76C6FF] hover:decoration-2 transition-all duration-300'>
+                                О нас
+                            </p>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                <g fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5">
+                                    <path stroke-dasharray="48" stroke-dashoffset="48" d="M11 5h-6v14h14v-6">
+                                        <animate fill="freeze" attributeName="stroke-dashoffset" dur="0.6s" values="48;0" />
+                                    </path>
+                                    <path stroke-dasharray="12" stroke-dashoffset="12" d="M13 11l7 -7">
+                                        <animate fill="freeze" attributeName="stroke-dashoffset" begin="0.6s" dur="0.2s" values="12;0" />
+                                    </path>
+                                    <path stroke-dasharray="8" stroke-dashoffset="8" d="M21 3h-6M21 3v6">
+                                        <animate fill="freeze" attributeName="stroke-dashoffset" begin="0.8s" dur="0.2s" values="8;0" />
+                                    </path>
+                                </g>
+                            </svg>
+                        </Link>
                         <div className="text-[13px] sm:text-[14px] xl:text-[15px] font-eastman_regular w-full sm:w-[50vw] lg:w-[40vw] mt-4 sm:mt-6 xl:mt-[5vh] leading-relaxed">
                             Профессиональный преподаватель, репетитор по скрипке. Обучаю игре на скрипке с нуля. Нотная грамота, сольфеджио. Развитие слуха, чувства ритма, формирование осанки у ребёнка также являются несомненными плюсами обучения игре на скрипке. Пишите и звоните! Что-нибудь надо написать, поэтому пишу. Все шикарно у меня, но пиздец как устала. И вот и все. Диля моя лучшая сестра. Вот так вот. Это рубрика обо мне.
                         </div>

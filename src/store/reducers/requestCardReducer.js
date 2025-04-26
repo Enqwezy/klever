@@ -1,15 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { fetchRequestByID } from '../actions/requestCardAction'
 
-const initialState = {
-	serviceData: [],
-	loading: false,
-	error: null,
-}
-
 const serviceByIdSlice = createSlice({
 	name: 'serviceById',
-	initialState,
+	initialState: {
+		serviceData: [],
+		loading: false,
+		error: null,
+	},
 	reducers: {
 		resetServiceByIdState: state => {
 			state.serviceData = []
@@ -22,7 +20,7 @@ const serviceByIdSlice = createSlice({
 			.addCase(fetchRequestByID.pending, state => {
 				state.loading = true
 				state.error = null
-				state.serviceData = null
+				state.serviceData = [] // Используем пустой массив
 			})
 			.addCase(fetchRequestByID.fulfilled, (state, action) => {
 				state.loading = false
@@ -31,7 +29,7 @@ const serviceByIdSlice = createSlice({
 			})
 			.addCase(fetchRequestByID.rejected, (state, action) => {
 				state.loading = false
-				state.serviceData = null
+				state.serviceData = [] // Используем пустой массив
 				state.error = action.payload
 			})
 	},
