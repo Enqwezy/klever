@@ -261,7 +261,7 @@ function ServicePage({ service_name }) {
                         <div className="text-sm sm:text-base md:text-lg">{cityName}</div>
                     </div>
                     
-                    <Chat serviceId={id} />
+                    <Chat />
                 </div>
             </div>
             <Footer />

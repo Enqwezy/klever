@@ -11,6 +11,7 @@ import { useSelector, useDispatch } from 'react-redux'
 // import { fetchRequestByID } from '../../store/services/requestCardService'
 import { fetchRequestByID } from '../../store/actions/requestCardAction'
 import { serviceList } from '../../store/actions/servicesListAction'
+import Chat from '../UI/chat/Chat'
 
 function Services({service_name}) {
     const dispatch = useDispatch()
@@ -83,6 +84,7 @@ function Services({service_name}) {
                 ) : null}
 
             </div>
+            <Chat/>
             <Footer/>
         </div>
     )
