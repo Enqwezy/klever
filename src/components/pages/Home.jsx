@@ -1,20 +1,30 @@
 import React, { useState } from 'react';
 import klever from '../../assets/img/home-klever.png';
-import ServicesCard from '../UI/cards/ServicesCard';
-import cosmeticCard from '../../assets/img/cosmetic-card.png';
-import someClever from '../../assets/img/some-klever.png';
 import RegularInputs from '../UI/input/RegularInputs';
 import { Link } from 'react-router-dom';
-import endPhoto from '../../assets/img/home-end-photo.png';
 import Header from '../main/Header';
 import Footer from '../main/Footer';
+import ServicesCard from '../UI/cards/ServicesCard';
+
+import someClever from '../../assets/img/some-klever.png';
+import endPhoto from '../../assets/img/home-end-photo.png';
+
+import cosmeticCard from '../../assets/img/cosmetic-card.png';
+import englishCard from '../../assets/img/english-card.png';
+import electricCard from '../../assets/img/electric-card.png';
+import medicineCard from '../../assets/img/medicine-card.jpeg';
+import cleaningCard from '../../assets/img/cleaning-card.jpeg';
+
+
 
 function Home() {
     const [currentSlide, setCurrentSlide] = useState(0);
     const services = [
         { photo: cosmeticCard, name: 'Косметология', description: 'чистка лица, пилинг, уходовые процедуры...' },
-        { photo: cosmeticCard, name: 'Косметология', description: 'чистка лица, пилинг, уходовые процедуры...' },
-        { photo: cosmeticCard, name: 'Косметология', description: 'чистка лица, пилинг, уходовые процедуры...' },
+        { photo: englishCard, name: 'Английский язык', description: 'улучшения произношения английского языка...' },
+        { photo: electricCard, name: 'Электрик', description: 'замена лампочки, почина чайника...' },
+        { photo: medicineCard, name: 'Медицинские услуги', description: 'осмотр, консультации, лечение...' },
+        { photo: cleaningCard, name: 'Уборка', description: 'генеральная уборка, уборка после ремонта...' },
     ];
     const totalSlides = services.length;
 
