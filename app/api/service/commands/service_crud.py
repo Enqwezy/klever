@@ -119,6 +119,7 @@ async def create_service(
         name=service_data.name,
         description=service_data.description,
         price=service_data.price,
+        rating=service_data.rating,
         photo=photo_path,
         city_id=service_data.city_id,
         variant_id=service_data.variant_id,
