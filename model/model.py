@@ -176,3 +176,29 @@ class Restaurant(Base):
     city = relationship("City", back_populates="restaurants")
     variant_restaurant = relationship("VariantRestaurant", back_populates="restaurants")
     restaurant_admin = relationship("RestaurantAdmin", back_populates="restaurants")
+    type_foods = relationship("TypeFood", back_populates="restaurant")
+
+
+class TypeFood(Base):
+    __tablename__ = "type_foods"
+
+    id = Column(Integer, primary_key=True, index=True)
+    type_name = Column(String(100), default="", nullable=False)
+    restaurant_id = Column(Integer, ForeignKey("restaurants.id"), nullable=False)
+
+    restaurant = relationship("Restaurant", back_populates="type_foods")
+    foods = relationship("Food", back_populates="type_food")
+
+
+class Food(Base):
+    __tablename__ = "foods"
+
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String(100), default="", nullable=False)
+    massa = Column(Integer, default=0, nullable=True)
+    description = Column(Text, default="", nullable=True)
+    price = Column(DECIMAL(10, 2), default=0, nullable=False)
+    photo = Column(Text, default="", nullable=True)
+    type_food_id = Column(Integer, ForeignKey("type_foods.id"), nullable=False)
+
+    type_food = relationship("TypeFood", back_populates="foods")
