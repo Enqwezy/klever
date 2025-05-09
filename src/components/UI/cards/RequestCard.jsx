@@ -1,45 +1,101 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import API from '../../../store/services/api'; // Предполагаемый клиент API
 
 function RequestCard({ data, service_name }) {
-    return (    
-        <Link to={`/${service_name}/${data.id}`} className='bg-[#f8f8f8] font-eastman_regular flex flex-col gap-3 shadow-card rounded-[15px] mt-5 cursor-pointer md:flex-row-reverse md:min-h-[20vh] lg:min-h-[12vh] xl:max-h-[8vh] xl:min-h-[30vh] 2xl:pl-2 relative pb-3 md:pb-0 2xl:justify-between'>
-            <div>
-                <img src={data.photo} alt="" className='rounded-t-[15px] object-cover md:rounded-r-[15px] md:h-full  lg:max-w-[30vw] xl:max-w-[17vw] 2xl:max-w-[17vw]' />
-            </div>
-            <div className='md:p-3 md:text-left 2xl:justify-start 2xl:p-2'>
+  const [isFavorite, setIsFavorite] = useState(false);
+  const [error, setError] = useState(null);
 
-                <div className='font-eastman_medium text-[6vw] sm:text-[5vw] md:text-[4vw] lg:text-[1.8vw] xl:text-[1.2vw] 2xl:text-[1.3vw]'>
-                    {data.name}
-                </div>
-                <div className='font-eastman_medium sm:text-[3vw] md:text-[2.5vw] lg:text-[1.6vw] xl:text-[1.2vw] 2xl:text-[1vw]'>
-                    от {data.price}Тг
-                </div>
-                <div className='text-[3.5vw] md:text-[2vw] lg:text-[1.3vw] xl:text-[0.9vw] lg:mt-2 2xl:text-[0.85vw] '>
-                    {data.description}
-                </div>
-                <div className='sm:text-[3vw] md:text-[2.3vw] md:mt-3 lg:text-[1.4vw] xl:text-[1vw] 2xl:text-[0.9vw] 2xl:mt-1'>
-                    {data.address}
-                </div>
-                <div className='md:flex md:flex-row gap-x-5 2xl:mt-0'>
+  // Проверка, есть ли услуга в избранном
+  useEffect(() => {
+    const checkFavorite = async () => {
+      try {
+        const token = localStorage.getItem('access_token');
+        const response = await API.get('/v1/favourites', {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        const favoriteIds = response.data.map((fav) => fav.service.id);
+        setIsFavorite(favoriteIds.includes(data.id));
+      } catch (err) {
+        console.error('Error checking favorite:', err);
+      }
+    };
+    checkFavorite();
+  }, [data.id]);
 
-                    <div className='text-[5.5vw] md:text-[3vw] lg:text-[1.7vw] xl:text-[1vw] 2xl:text-[0.95vw]'>
-                        {data.review_count} отзывов
-                    </div>
-                    <div className='flex flex-row justify-center sm:text-[3vw] items-center lg:text-[1.7vw] xl:text-[1vw] 2xl:text-[1vw]'>
-                        {data.rating}<svg className='md:size-[30px] size-[20px] xl:size-[20px] 2xl:size-[15px]' viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M19.7137 7.04257L13.7181 6.1301L11.0379 0.440169C10.9647 0.284382 10.8442 0.158269 10.6955 0.0816118C10.3224 -0.111267 9.86898 0.0494654 9.68243 0.440169L7.00223 6.1301L1.00662 7.04257C0.841325 7.0673 0.690195 7.1489 0.574486 7.27254C0.434601 7.4231 0.357517 7.62566 0.360174 7.8357C0.362831 8.04575 0.44501 8.24609 0.588655 8.39272L4.92656 12.8215L3.90171 19.0753C3.87768 19.2207 3.89305 19.3703 3.94608 19.5071C3.99912 19.6439 4.0877 19.7624 4.20177 19.8492C4.31584 19.9359 4.45085 19.9875 4.59147 19.998C4.7321 20.0085 4.87273 19.9775 4.9974 19.9086L10.3602 16.9561L15.7229 19.9086C15.8693 19.9902 16.0393 20.0174 16.2023 19.9877C16.6132 19.9135 16.8894 19.5055 16.8186 19.0753L15.7938 12.8215L20.1317 8.39272C20.2497 8.27156 20.3277 8.1133 20.3513 7.9402C20.415 7.50746 20.1269 7.10686 19.7137 7.04257Z" fill="#FFC700" />
-                        </svg>
+  // Добавление/удаление из избранного
+  const handleToggleFavorite = async () => {
+    try {
+      setError(null);
+      if (isFavorite) {
+        const token = localStorage.getItem('access_token');
+        await API.delete(`/v1/favourites/${ data.id }`, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        setIsFavorite(false);
+      } else {
+        const token = localStorage.getItem('access_token');
+        await API.post('/v1/add-favourites', { service_id: data.id }, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        setIsFavorite(true);
+      }
+    } catch (err) {
+      console.error('Error toggling favorite:', err);
+      setError('Ошибка при изменении избранного. Попробуйте снова.');
+    }
+  };
 
-                    </div>
-                </div>
-                <div className='sm:text-[3vw] md:text-[2vw] md:flex md:justify-end md:mt-2 2xl:text-[1vw] lg:text-[1.7vw] xl:text-[1vw] xl:mt-0 xl:mb-2 italic'>
-                    Опубликовано {data.created_at.split('T')[0]}
-                </div>
-            </div>
-        </Link>
+  return (
+    <div className="bg-white p-4 rounded-[12px] shadow-container flex flex-col sm:flex-row gap-4">
+      {data.photo && (
+        <img
+          src={data.photo}
+          alt={data.name}
+          className="w-full sm:w-32 h-32 object-cover rounded-[8px]"
+        />
+      )}
+      <div className="flex-1">
+        <Link to={`/${ service_name }/${data.id}`}>
+    <h3 className="font-eastman_medium text-[16px] sm:text-[18px] text-[#0A0A0A] hover:text-blue-600">
+        {data.name}
+    </h3>
+        </Link >
+        <p className="text-[14px] sm:text-[16px] text-gray-600 mt-1">
+          {data.description}
+        </p>
+        <p className="text-[14px] sm:text-[16px] text-gray-600 mt-1">
+          {data.city.name} • от {data.price.split('.')[0]} ₸
+        </p>
+        <p className="text-[14px] sm:text-[16px] text-gray-600 mt-1">
+          Рейтинг: {data.rating || 'Нет оценок'}
+        </p>
+{
+    error && (
+        <p className="text-[14px] text-red-600 mt-2">{error}</p>
     )
 }
+      </div >
+    <button
+        onClick={handleToggleFavorite}
+        className="self-start sm:self-end p-2 hover:bg-gray-100 rounded-full"
+    >
+        <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill={isFavorite ? '#FF0000' : 'none'}
+            stroke={isFavorite ? '#FF0000' : '#0A0A0A'}
+            strokeWidth="2"
+            xmlns="http://www.w3.org/2000/svg"
+        >
+            <path
+                d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+            />
+        </svg>
+    </button>
+    </div >
+  );
+}
 
-export default RequestCard
+export default RequestCard;

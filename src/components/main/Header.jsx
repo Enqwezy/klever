@@ -232,6 +232,9 @@ function Header() {
             <Link to="/med-service" onClick={toggleSidebar} className="hover:text-gray-200">
               Медицинские услуги
             </Link>
+            <Link to="/restaurant" onClick={toggleSidebar} className="hover:text-gray-200">
+              РЕСТОРАНЫ
+            </Link>
             {isAuthenticated ? (
               <>
                 <Link to="/profile" onClick={toggleSidebar} className="hover:text-gray-200 mt-5">

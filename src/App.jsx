@@ -1,12 +1,20 @@
 import { Routes, Route } from 'react-router-dom';
+
+// основные страницы
 import Register from './components/pages/Register';
 import Login from './components/pages/Login';
-import Home from './components/pages/Home';
-import Services from './components/pages/Services';
-import ServicesList from './components/pages/ServicesList';
-import ServicePage from './components/pages/ServicePage';
-import AboutUs from './components/pages/AboutUs';
 import Profile from './components/pages/Profile';
+import AboutUs from './components/pages/AboutUs';
+
+// услуги страницы
+import Home from './components/pages/services/Home';
+import Services from './components/pages/services/Services';
+import ServicesList from './components/pages/services/ServicesList';
+import ServicePage from './components/pages/services/ServicePage';
+import Favorites from './components/pages/services/Favorites';
+import HomeRestaurant from './components/pages/restaurant/HomeRestaurant';
+
+
 
 
 function App() {
@@ -18,6 +26,8 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/about" element={<AboutUs />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/favorites" element={<Favorites />} />
+
 
         {/* красота */}
         <Route path="/beauty" element={<Services service_name="beauty" />} />
@@ -43,6 +53,9 @@ function App() {
         <Route path="/med_service" element={<Services service_name="med_service" />} />
         <Route path="/med_service/all" element={<ServicesList service_name="med_service" />} />
         <Route path="/med_service/:id" element={<ServicePage service_name="med_service" />} />
+
+
+        <Route path='/restaurant' element={<HomeRestaurant service_name='home_page_restaurant'/>}/>
 
 
 
