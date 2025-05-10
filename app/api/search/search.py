@@ -14,6 +14,7 @@ router = APIRouter()
     response_model=list[ServiceResponse]
 )
 async def get_filtered_services(
+    search: Optional[str] = Query(None, description="Текстовый поиск по названию и описанию услуги"),
     city_ids: Optional[str] = Query(None, description="Список ID городов через запятую, например: 1,2"),
     variant_ids: Optional[str] = Query(None, description="Список ID подкатегорий через запятую, например: 1,2"),
     min_price: Optional[float] = None,
@@ -32,7 +33,8 @@ async def get_filtered_services(
         min_price=min_price,
         max_price=max_price,
         min_rating=min_rating,
-        max_rating=max_rating
+        max_rating=max_rating,
+        search_query=search
     )
     return [
         {
@@ -40,7 +42,8 @@ async def get_filtered_services(
             "city": service["service"].city.__dict__,
             "variant": service["service"].variant.__dict__,
             "specialist": service["service"].specialist.__dict__,
-            "review_count": service["review_count"]
+            "review_count": service["review_count"],
+            "rank": service["rank"]
         }
         for service in services_with_data
     ]

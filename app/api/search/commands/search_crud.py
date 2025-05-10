@@ -1,9 +1,9 @@
-from sqlalchemy import select
+from sqlalchemy import select, func
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import joinedload
-import logging
 from model.model import Service
-from typing import List
+from typing import List, Optional
+import logging
 
 
 logger = logging.getLogger(__name__)
@@ -16,8 +16,11 @@ async def get_services(
     min_price: float | None = None,
     max_price: float | None = None,
     min_rating: float | None = None,
-    max_rating: float | None = None
+    max_rating: float | None = None,
+    search_query: str | None = None
 ):
+    rank_column = func.ts_rank(Service.search_vector, func.plainto_tsquery('russian', search_query)).label('rank') if search_query else None
+
     query = (
         select(Service)
         .options(
@@ -27,6 +30,12 @@ async def get_services(
             joinedload(Service.reviews)
         )
     )
+
+    if search_query:
+        logger.debug(f"Поиск по запросу: {search_query}")
+        tsquery = func.plainto_tsquery('russian', search_query)
+        query = query.filter(Service.search_vector.op('@@')(tsquery))
+        query = query.order_by(func.ts_rank(Service.search_vector, tsquery).desc())
 
     if city_ids:
         logger.debug(f"Фильтр по city_ids: {city_ids}")
@@ -52,8 +61,9 @@ async def get_services(
 
     services_with_data = [
         {
-            "service": service,
-            "review_count": len(service.reviews)
+            "service": service.Service if isinstance(service, tuple) else service,
+            "review_count": len((service.Service if isinstance(service, tuple) else service).reviews),
+            "rank": service.rank if isinstance(service, tuple) and search_query else 0.0
         }
         for service in services
     ]

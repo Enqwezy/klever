@@ -6,7 +6,7 @@ class UserResponse(BaseModel):
     id: int
     username: str
     email: str
-    phone_number: int
+    phone_number: Optional[str] | None
     address: str
 
     class Config:

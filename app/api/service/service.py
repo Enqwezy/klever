@@ -56,6 +56,7 @@ async def create_new_service(
     name: str = Form(...),
     description: str | None = Form(default=None),
     price: float | None = Form(default=None),
+    rating: float | None = Form(default=None),
     city_id: int = Form(...),
     variant_id: int = Form(...),
     specialist_id: int = Form(...),
@@ -69,6 +70,7 @@ async def create_new_service(
             name=name,
             description=description,
             price=price,
+            rating=rating,
             city_id=city_id,
             variant_id=variant_id,
             specialist_id=specialist_id
