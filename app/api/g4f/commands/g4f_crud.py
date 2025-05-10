@@ -15,7 +15,7 @@ async def process_chat_message(message: str, db: AsyncSession):
     # Извлекаем ключевое слово с помощью g4f
     try:
         response = g4f_client.chat.completions.create(
-            model="gpt-4o",
+            model="gpt-4",
             messages=[
                 {"role": "system", "content": "Ты — помощник для поиска услуг. Извлеки главное ключевое слово (существительное, связанное с услугой) из текста пользователя и верни только его без изменений. Если слова нет, верни пустую строку."},
                 {"role": "user", "content": message}
