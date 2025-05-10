@@ -7,7 +7,7 @@ import { Link, useNavigate } from 'react-router-dom'; // Добавляем useN
 
 function Register() {
     const dispatch = useDispatch();
-    const navigate = useNavigate(); // Хук для перенаправления
+    const navigate = useNavigate(); 
 
     const [formData, setFormData] = useState({
         name: '',
@@ -25,13 +25,15 @@ function Register() {
     const handleRegister = async (e) => {
         e.preventDefault();
         try {
-            // Предполагаем, что register возвращает промис
-            await dispatch(register(formData));
-            // Если регистрация успешна, перенаправляем на главную страницу
-            navigate('/');
+            const resultAction = await dispatch(register(formData));
+
+            if (register.fulfilled.match(resultAction)) {
+                navigate('/');
+            } else {
+                console.error('Ошибка регистрации:', resultAction.payload || resultAction.error);
+            }
         } catch (error) {
-            console.error('Ошибка регистрации:', error);
-            // Здесь можно добавить обработку ошибки, например, показать уведомление
+            console.error('Неожиданная ошибка:', error);
         }
     };
 
@@ -66,10 +68,10 @@ function Register() {
                         <RegularInputs
                             name="phone"
                             placeholder="Your phone"
-                            type="tel"
+                            type="text"
                             borderColor="border-[#6A6A6A]"
                             value={formData.phone}
-                            onChange={handleChange}
+                            onChange={handleChange} 
                         />
                         <RegularInputs
                             name="email"
