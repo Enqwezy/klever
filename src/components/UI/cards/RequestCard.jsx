@@ -50,7 +50,7 @@ function RequestCard({ data, service_name }) {
     <div className="bg-white p-4 rounded-[12px] shadow-container flex flex-col sm:flex-row gap-4">
       {data.photo && (
         <img
-          src={data.photo}
+          src={'http://localhost:8000/'+data.photo}
           alt={data.name}
           className="w-full sm:w-32 h-32 object-cover rounded-[8px]"
         />

@@ -5,7 +5,7 @@ function ServicesCard({ photo, name, description }) {
         <div>
             <div className="relative w-full max-w-[320px] h-[250px] shadow-card cursor-pointer">
                 <img
-                    src={photo}
+                    src={'http://localhost:8000/' + photo}
                     alt="Service"
                     className="z-10 w-full max-w-[320px] h-[250px] object-cover"
                 />

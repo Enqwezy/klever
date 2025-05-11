@@ -7,6 +7,7 @@ import critic from "../../../assets/img/restaurant/critik.png";
 import Footer from '../../main/Footer'
 import menu1 from '../../../assets/img/restaurant/menu-1.png'
 import menu2 from '../../../assets/img/restaurant/menu-2.png'
+import { Link } from 'react-router-dom';
 
 
 function HomeRestaurant() {
@@ -137,9 +138,10 @@ function HomeRestaurant() {
             <div className='flex justify-center items-center mt-10'>
 
                 <div className='flex justify-center flex-row gap-2 items-center rounded-xl bg-[#F3274C] text-black font-russo font-bold text-[20px]  py-2 px-4 shadow-container shadow-red-700 hover:scale-110 transition-all duration-300 cursor-pointer '>
-                    <span className=''>
+                    
+                    <Link to={'/restaurant/list'} className=''>
                         Перейти к Ресторанам
-                    </span>
+                    </Link>
                     <div>
 
                         <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24"><g fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"><path stroke-dasharray="20" stroke-dashoffset="20" d="M3 12h17.5"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.2s" values="20;0" /></path><path stroke-dasharray="12" stroke-dashoffset="12" d="M21 12l-7 7M21 12l-7 -7"><animate fill="freeze" attributeName="stroke-dashoffset" begin="0.2s" dur="0.2s" values="12;0" /></path></g></svg>

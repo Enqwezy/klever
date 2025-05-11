@@ -1,5 +1,5 @@
 import React from 'react'
-import logoMini from '../../assets/img/logo-mini-black.png';
+import logoMini from '../../assets/img/restaurant/logo-mini-black.png';
 
 
 
