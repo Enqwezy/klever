@@ -1,11 +1,19 @@
 import React from 'react';
 
-function ServicesCard({ photo, name, description }) {
+function ServicesCard({ photo, name, description, isHome=false }) {
+    let pathPhoto = photo
+    if (isHome){
+        pathPhoto = photo
+    }
+    else {
+        pathPhoto = 'http://localhost:8000/' + photo
+    }
+
     return (
         <div>
             <div className="relative w-full max-w-[320px] h-[250px] shadow-card cursor-pointer">
                 <img
-                    src={'http://localhost:8000/' + photo}
+                    src={pathPhoto}
                     alt="Service"
                     className="z-10 w-full max-w-[320px] h-[250px] object-cover"
                 />

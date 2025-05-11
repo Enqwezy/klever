@@ -139,6 +139,7 @@ function Home() {
                                     photo={service.photo}
                                     name={service.name}
                                     description={service.description}
+                                    isHome={true}
                                 />
                             </div>
                         ))}
