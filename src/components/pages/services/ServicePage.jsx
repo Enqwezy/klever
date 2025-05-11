@@ -46,7 +46,7 @@ function ServicePage({ service_name }) {
         );
     }
 
-    const { name, description, price, photo, rating, city, specialist } = serviceProfileData;
+    const { name, description, price, photo, rate, city, specialist } = serviceProfileData;
     const specialistPhoto = specialist?.photo || '/media/default_ava.jpg';
     const specialistName = specialist?.fullname || 'Не указан';
     const phoneNumber = specialist?.phone_number || 'Не указан';
@@ -86,7 +86,7 @@ function ServicePage({ service_name }) {
                                 <div>Контакты:</div>
                                 <div className="flex flex-row gap-1 items-center">
                                     <span className="text-lg sm:text-xl md:text-2xl lg:text-3xl">
-                                        {rating || 'N/A'}
+                                        {rate || 'N/A'}
                                     </span>
                                     <div>
                                         <svg
