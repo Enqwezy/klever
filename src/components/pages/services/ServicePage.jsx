@@ -65,7 +65,7 @@ function ServicePage({ service_name }) {
                 <div className="w-[90vw] sm:w-[85vw] md:w-[80vw] flex flex-col md:flex-row gap-6 md:gap-8 xl:gap-10">
                     <div className="w-full md:w-1/2">
                         <img
-                            src={photo || '/media/default_service.jpg'}
+                            src={'http://localhost:8000/' + photo}
                             alt={name}
                             className="w-full max-w-[100%] md:max-w-[45vw] object-cover rounded-lg"
                         />
@@ -73,7 +73,7 @@ function ServicePage({ service_name }) {
                     <div className="w-full md:w-1/2">
                         <div className="flex justify-center items-center">
                             <img
-                                src={specialistPhoto}
+                                src={'http://localhost:8000/' + specialistPhoto}
                                 alt={specialistName}
                                 className="rounded-full h-20 w-20 sm:h-24 sm:w-24 md:h-28 md:w-28 lg:h-32 lg:w-32 object-cover"
                             />
