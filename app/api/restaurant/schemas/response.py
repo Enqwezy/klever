@@ -9,7 +9,7 @@ class CityResponse(BaseModel):
     name: str
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 class RestaurantAdminResponse(BaseModel):
     id: int
@@ -33,7 +33,7 @@ class RestaurantsResponse(BaseModel):
     rating: Optional[float] = None
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 '''Получить рестоарны по ID'''
 class RestaurantResponse(BaseModel):

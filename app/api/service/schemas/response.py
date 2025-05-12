@@ -10,7 +10,7 @@ class Cityresponse(BaseModel):
     name: str
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 class SpecialistResponse(BaseModel):
     id: int
@@ -34,7 +34,7 @@ class ServicesResponse(BaseModel):
     rating: Optional[float] = None
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 '''Получить сервис по ID'''
 class ServiceResponse(BaseModel):

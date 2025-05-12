@@ -12,7 +12,7 @@ class FoodResponse(BaseModel):
     photo: Optional[str]
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 class TypeFoodResponse(BaseModel):
     id: int
@@ -20,7 +20,7 @@ class TypeFoodResponse(BaseModel):
     foods: List[FoodResponse]
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 class RestaurantResponse(BaseModel):
     id: int
@@ -33,4 +33,4 @@ class RestaurantResponse(BaseModel):
     type_foods: List[TypeFoodResponse]
 
     class Config:
-        orm_mode = True
+        from_attributes = True
