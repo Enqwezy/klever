@@ -54,7 +54,6 @@ function Chat() {
 
     const handleChatHideForever = () => {
         setChatState('closed');
-        setIsChatHidden(true);
         localStorage.setItem('chat_hidden', 'true');
     };
 
@@ -213,10 +212,6 @@ function Chat() {
                                             </button>
                                         </form>
 
-                                        {/* Кнопка "Закрыть навсегда" */}
-                                        <button onClick={handleChatHideForever} className="w-full text-center text-xs sm:text-sm text-gray-500 hover:text-gray-700 p-2">
-                                            Закрыть чат навсегда
-                                        </button>
                                     </>
                                 )}
 
