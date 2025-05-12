@@ -131,7 +131,7 @@ const ServicesList = ({ service_name }) => {
         <h1 className="font-eastman_medium text-[24px] sm:text-[32px] xl:text-[40px] text-[#0A0A0A] text-center w-full mb-6">
           {serviceMap[service_name]?.name || 'Услуги'}
         </h1>
-        <Link to={`/ ${ service_name } `} className="flex items-center mb-4 sm:mb-6 md:mb-8 ml-12">
+        <Link to={`/${ service_name } `} className="flex items-center mb-4 sm:mb-6 md:mb-8 ml-12">
           <button className="flex items-center gap-2 bg-black text-white px-3 py-2 sm:px-4 sm:py-2 rounded hover:bg-gray-800 text-sm sm:text-base md:text-lg transition-colors duration-200">
             <svg
               width="20"
