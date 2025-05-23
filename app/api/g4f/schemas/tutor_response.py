@@ -36,7 +36,7 @@ class TutorResponse(BaseModel):
     description: Optional[str] = None
     price: Optional[Decimal] = None
     photo: Optional[str] = None
-    created_at: datetime
+    created_at: datetime | None = None
     city: CityResponse
-    review_count: int
+    review_count: int | None = None
     rating: Optional[float] = None  
