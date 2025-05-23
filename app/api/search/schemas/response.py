@@ -45,3 +45,38 @@ class ServiceResponse(BaseModel):
 
     class Config:
         from_attributes = True
+
+
+"""Поисковик для ресторана"""
+class VariantRestaurantResponse(BaseModel):
+    id: int
+    name: str
+
+    class Config:
+        from_attributes = True
+
+class RestaurantAdminResponse(BaseModel):
+    id: int
+    fullname: str
+    phone_number: Optional[str] = None
+    email: Optional[str] = None
+
+    class Config:
+        from_attributes = True
+
+class RestaurantResponse(BaseModel):
+    id: int
+    name: str
+    description: Optional[str] = None
+    price: Optional[Decimal] = None
+    photo: Optional[str] = None
+    rating: Optional[float] = None
+    created_at: datetime
+    city: CityResponse
+    variant_restaurant: VariantRestaurantResponse
+    restaurant_admin: RestaurantAdminResponse
+    type_food_count: int
+    rank: float
+
+    class Config:
+        from_attributes = True

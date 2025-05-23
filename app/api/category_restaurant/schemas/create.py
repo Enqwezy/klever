@@ -5,4 +5,4 @@ class CategoryRestaurantCreate(BaseModel):
     category_name: str
 
     class Config:
-        orm_mode = True
+        from_attributes = True

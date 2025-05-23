@@ -11,4 +11,4 @@ class SpecialistCreate(BaseModel):
     whatsapp_link: Optional[str] = None
 
     class Config:
-        orm_mode = True
+        from_attributes = True
