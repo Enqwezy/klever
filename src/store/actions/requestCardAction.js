@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
-import { getRequestByID } from '../services/requestCardService'
+import { getRequestByID, searchCard } from '../services/requestCardService'
 
 export const fetchRequestByID = createAsyncThunk(
 	'request/byId',
@@ -14,6 +14,22 @@ export const fetchRequestByID = createAsyncThunk(
 		}
 	}
 )
+
+
+export const fetchSearchCard = createAsyncThunk(
+	'search/card',
+	async (query, { rejectWithValue }) => {
+		try {
+			const data = await searchCard(query)
+			return data
+		} catch (error) {
+			const errorMessage =
+				error.response?.data?.detail || 'Ошибка получения данных услуги'
+			return rejectWithValue(errorMessage)
+		}
+	}
+)
+
 
 
 

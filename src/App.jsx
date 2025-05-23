@@ -55,6 +55,9 @@ function App() {
                 <Route path="/med_service/all" element={<ServicesList service_name="med_service" />} />
                 <Route path="/med_service/:id" element={<ServicePage service_name="med_service" />} />
 
+                <Route path="/:id" element={<ServicePage />} />
+
+
 
                 <Route path='/restaurant' element={<HomeRestaurant service_name='home_page_restaurant' />} />
                 <Route path='/restaurant/list' element={<RestaurantsList service_name='list_page_restaurant' />} />

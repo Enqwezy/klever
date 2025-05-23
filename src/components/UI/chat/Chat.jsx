@@ -115,7 +115,7 @@ function Chat() {
 
     return (
         <>
-            {!isChatHidden || isChatHidden  && (
+            
                 <div>
                     <button
                         onClick={handleChatToggle}
@@ -226,7 +226,6 @@ function Chat() {
                         )}
                     </div>
                 </div>
-            )}
         </>
     );
 }

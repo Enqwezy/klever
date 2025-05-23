@@ -22,8 +22,13 @@ function Login() {
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
-            await dispatch(login(formData));
-            navigate('/');
+            result = await dispatch(login(formData));
+            if (login.fulfilled.match(result)) {
+                console.log('Успешный вход:', result.payload);
+                navigate('/');
+            } else {
+                console.error('Ошибка входа:', result.payload || result.error);
+            }
         } catch (error) {
             console.error('Ошибка авторизации:', error);
         }
@@ -36,14 +41,14 @@ function Login() {
                     to={'/'}
                     className="flex flex-row bg-white text-black gap-3 xl:text-[15px] 2xl:text-[20px] rounded-xl p-2 font-eastman_regular justify-center items-center"
                 >
-                    <div className="xl:min-w-[23px] xl:min-h-[23px] 2xl:min-w-[30px] 2xl:min-h-[30px]">
+                    <div className="">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"
                             viewBox="0 0 24 24"
                             strokeWidth="1.5"
                             stroke="currentColor"
-                            className="size-6"
+                            className="xl:min-w-[23px] xl:min-h-[23px] 2xl:min-w-[30px] 2xl:min-h-[30px]"
                         >
                             <path
                                 strokeLinecap="round"

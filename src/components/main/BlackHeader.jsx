@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import logoMini from '../../assets/img/logo-mini-black.png';
+import { useDispatch } from 'react-redux';
+import { fetchSearchCard } from '../../store/actions/requestCardAction'
 
 function BlackHeader() {
     const accessToken = localStorage.getItem('access_token');
@@ -13,13 +15,11 @@ function BlackHeader() {
     const navigate = useNavigate();
     const searchRef = useRef(null);
     const debounceTimeout = useRef(null);
+    const dispatch = useDispatch()
 
     const searchRequests = async (query) => {
-        return [
-            { id: 1, title: `Услуга ${query} 1` },
-            { id: 2, title: `Услуга ${query} 2` },
-            { id: 3, title: `Услуга ${query} 3` },
-        ];
+
+        return dispatch(fetchSearchCard(query))
     };
 
     useEffect(() => {
@@ -37,7 +37,8 @@ function BlackHeader() {
         debounceTimeout.current = setTimeout(async () => {
             try {
                 const results = await searchRequests(searchQuery);
-                setSearchResults(results);
+                setSearchResults(results.payload);
+                console.log(results)
             } catch (error) {
                 console.error('Ошибка поиска:', error);
                 setSearchResults([]);
@@ -84,7 +85,7 @@ function BlackHeader() {
             <div className="flex flex-row gap-10 w-[80vw] justify-between items-center">
                 <div className="flex flex-col gap-y-4">
                     <Link to={'/'} className='cursor-pointer'>
-                    <img src={logoMini} alt="" className="w-[80px] md:w-[100px] 2xl:w-[150px]" />
+                        <img src={logoMini} alt="" className="w-[80px] md:w-[100px] 2xl:w-[150px]" />
                     </Link>
                     <div className="flex flex-col gap-y-[5px] cursor-pointer" onClick={toggleSidebar}>
                         <svg className="w-[30px] h-[2px]" viewBox="0 0 40 2" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -129,31 +130,36 @@ function BlackHeader() {
                             )}
                         </div>
                         {isSearchOpen && (
-                            <div className="absolute top-full left-0 w-[200px] sm:w-[250px] mt-2">
+                            <div className="absolute top-full left-0 w-[200px] sm:w-full mt-1 z-20">
                                 {isSearching && (
                                     <div className="bg-white rounded-[10px] shadow-lg p-2 text-black font-eastman_regular text-[14px]">
                                         Загрузка...
                                     </div>
                                 )}
                                 {searchResults.length > 0 && !isSearching && (
-                                    <div className="bg-white rounded-[10px] shadow-lg max-h-[200px] overflow-y-auto">
+                                    <div className="bg-white rounded-[10px] shadow-lg max-h-[200px] overflow-y-auto ">
                                         {searchResults.map((result) => (
                                             <Link
                                                 key={result.id}
-                                                to={`/service/${result.id}`}
-                                                className="block p-2 hover:bg-gray-100 text-black font-eastman_regular text-[14px]"
+                                                to={`/${result.id}`}
+                                                className="block p-2 hover:bg-gray-100 text-black font-eastman_regular text-[14px] border-t-2 border-gray-500 cursor-pointer"
                                                 onClick={() => {
                                                     setIsSearchOpen(false);
                                                     setSearchQuery('');
                                                     setSearchResults([]);
                                                 }}
                                             >
-                                                {result.title}
+                                                <div className='flex flex-row gap-2 items-center'>
+                                                    <img src={"http://localhost:8000/" + result.photo} alt="" className='size-12' />
+                                                    <div className='font-eastman_regular'>{result.name}</div>
+                                                    <div className='text-gray-800 text-[12px]'>{result.price.split('.')[0]} Тг</div>
+
+                                                </div>
                                             </Link>
                                         ))}
                                     </div>
                                 )}
-                                {!isSearching && searchQuery && searchResults.length === 0 && (
+                                {!isSearching && searchResults.length === 0 && (
                                     <div className="bg-white rounded-[10px] shadow-lg p-2 text-black font-eastman_regular text-[14px]">
                                         Ничего не найдено
                                     </div>
