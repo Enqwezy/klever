@@ -14,7 +14,7 @@ export const getUserProfile = async (token) => {
 }
 
 export const updateUserProfile = async (token, data) => {
-    const response = await API.put(`/v1/user/profile`, data, {
+    const response = await API.put(`/v1/user/user/update`, data, {
         headers: {
             Authorization: `Bearer ${token}`
         }

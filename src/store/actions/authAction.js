@@ -5,7 +5,6 @@ export const register = createAsyncThunk(
   "auth/register",
   async (data, { rejectWithValue }) => {
     try {
-      debugger
       const response = await registerUser(data);
       console.log("Register response:", response);
       return response;

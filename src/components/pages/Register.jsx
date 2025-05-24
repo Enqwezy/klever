@@ -58,19 +58,19 @@ function Register() {
 
                     <div className="flex flex-col gap-y-4 sm:gap-y-5 xl:gap-y-[20px] font-eastman_regular">
                         <RegularInputs
-                            name="name"
-                            placeholder="Your name"
+                            name="username"
+                            placeholder="Username"
                             type="text"
                             borderColor="border-[#6A6A6A]"
-                            value={formData.name}
-                            onChange={handleChange}
+                            value={formData.username}
+                            onChange={handleChange} 
                         />
                         <RegularInputs
-                            name="phone"
+                            name="phone_number"
                             placeholder="Your phone"
-                            type="text"
+                            type="phone"
                             borderColor="border-[#6A6A6A]"
-                            value={formData.phone}
+                            value={formData.phone_number}
                             onChange={handleChange} 
                         />
                         <RegularInputs
